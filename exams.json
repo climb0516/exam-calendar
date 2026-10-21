@@ -1,0 +1,1177 @@
+{
+ "note": "人工维护的考试日程（整理于 2026-10-21）。status=official 的日期来自 source 所列官方公告或权威转载；status=estimate 为按往年惯例推算，仅供参考，请以官方最新公告为准。按省分批组织的考试，报名为全国大致区间，具体以本省公告为准。",
+ "exams": [
+  {
+   "id": "kaoyan",
+   "name": "全国硕士研究生招生考试",
+   "short": "考研",
+   "category": "升学",
+   "site": "https://yz.chsi.com.cn/",
+   "sessions": [
+    {
+     "label": "2027 年度",
+     "events": [
+      {
+       "type": "预报名",
+       "start": "2026-10-09",
+       "end": "2026-10-12",
+       "status": "official",
+       "source": "https://yz.chsi.com.cn/kyzx/other/202609/20260927/2293973606.html",
+       "note": "相关工作安排由各省级教育招生考试机构确定并公布"
+      },
+      {
+       "type": "报名",
+       "start": "2026-10-15",
+       "end": "2026-10-24",
+       "status": "official",
+       "source": "https://yz.chsi.com.cn/kyzx/other/202609/20260927/2293973606.html",
+       "note": "每日 9:00-22:00；网上报名与网上确认一体化，报名时一并提交核验材料"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-12-09",
+       "end": "2026-12-20",
+       "status": "estimate",
+       "source": "",
+       "note": "公告写明考前十天左右登录研招网下载打印，日期按此推算"
+      },
+      {
+       "type": "考试",
+       "start": "2026-12-19",
+       "end": "2026-12-20",
+       "status": "official",
+       "source": "https://yz.chsi.com.cn/kyzx/jybzc/202609/20260924/2293971512.html",
+       "note": "初试；《2027年全国硕士研究生招生工作管理规定》明确"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-02-24",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "往年初试成绩于 2 月下旬由各省陆续公布，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "研考|硕士研究生|研究生招生考试"
+  },
+  {
+   "id": "guokao",
+   "name": "中央机关及其直属机构考试录用公务员",
+   "short": "国考",
+   "category": "公务员",
+   "site": "http://bm.scs.gov.cn/kl2027",
+   "sessions": [
+    {
+     "label": "2027 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-10-15",
+       "end": "2026-10-24",
+       "status": "official",
+       "source": "https://education.news.cn/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html",
+       "note": "注册认证 10月14日8:00至10月23日18:00；报名和提交报考申请 10月15日8:00至10月24日18:00；招录机关资格审查至10月26日18:00"
+      },
+      {
+       "type": "确认",
+       "start": "2026-11-01",
+       "end": "2026-11-06",
+       "status": "official",
+       "source": "https://education.news.cn/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html",
+       "note": "通过资格审查者网上报名确认并缴费，11月1日0:00至11月6日24:00"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-11-23",
+       "end": "2026-11-29",
+       "status": "official",
+       "source": "https://education.news.cn/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html",
+       "note": "11月23日0:00至11月29日15:00"
+      },
+      {
+       "type": "考试",
+       "start": "2026-11-28",
+       "end": "2026-11-29",
+       "status": "official",
+       "source": "https://education.news.cn/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html",
+       "note": "公共科目笔试 11月29日（行测 9:00-11:00、申论 14:00-17:00）；11月28日下午为非通用语外语测试及金融监管、证监会、公安专业科目"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-01-01",
+       "end": "2027-01-31",
+       "status": "official",
+       "source": "https://education.news.cn/20261013/ce6bf7dc36474dd68ecd90aa8b722f06/c.html",
+       "note": "公告：2027年1月登录专题网站查询笔试成绩和合格分数线，具体时间另行通知"
+      }
+     ]
+    }
+   ],
+   "keywords": "国考|国家公务员|中央机关"
+  },
+  {
+   "id": "cet",
+   "name": "全国大学英语四、六级考试",
+   "short": "四六级",
+   "category": "语言",
+   "site": "https://cet.neea.edu.cn/",
+   "sessions": [
+    {
+     "label": "2026 年下半年",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-09-02",
+       "end": "2026-09-30",
+       "status": "estimate",
+       "source": "",
+       "note": "官方公告（9月2日发布）称各考点报名时间不同，按所在学校规定时间报名；区间为按惯例推算"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-11-17",
+       "end": "",
+       "status": "official",
+       "source": "https://cet.neea.edu.cn/html1/report/2609/1-1.htm",
+       "note": "口试准考证 11月17日9时起可打印"
+      },
+      {
+       "type": "考试",
+       "start": "2026-11-21",
+       "end": "2026-11-22",
+       "status": "official",
+       "source": "https://cet.neea.edu.cn/html1/report/2609/1-1.htm",
+       "note": "口试：11月21日 CET-SET4，11月22日 CET-SET6"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-12-01",
+       "end": "",
+       "status": "official",
+       "source": "https://cet.neea.edu.cn/html1/report/2609/1-1.htm",
+       "note": "笔试准考证 12月1日9时起可打印"
+      },
+      {
+       "type": "考试",
+       "start": "2026-12-12",
+       "end": "",
+       "status": "official",
+       "source": "https://cet.neea.edu.cn/html1/report/2609/1-1.htm",
+       "note": "笔试：上午四级 9:00-11:20，下午六级 15:00-17:25"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-02-26",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "往年下半年考试成绩于次年 2 月下旬发布，按惯例预估"
+      }
+     ]
+    },
+    {
+     "label": "2027 年上半年",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-03-01",
+       "end": "2027-04-15",
+       "status": "estimate",
+       "source": "",
+       "note": "往年上半年报名于 3 月启动，各考点报名时间不同，以学校通知为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-06-12",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年两次笔试均在 6/12 月第二个周六（6月13日、12月12日），按此推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-08-23",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年成绩于 8月24日开通查询，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "四、六级|四六级|CET"
+  },
+  {
+   "id": "ncre",
+   "name": "全国计算机等级考试",
+   "short": "计算机等级",
+   "category": "计算机",
+   "site": "https://ncre.neea.edu.cn/",
+   "sessions": [
+    {
+     "label": "2026 年 9 月（第 78 次）",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-06-25",
+       "end": "2026-09-04",
+       "status": "official",
+       "source": "https://ncre.neea.edu.cn/html1/report/2606/16-1.htm",
+       "note": "各省报名时间不同，以本省公告为准（多数省份 6月25日至7月中旬，部分省份 8月27日至9月4日）"
+      },
+      {
+       "type": "考试",
+       "start": "2026-09-19",
+       "end": "2026-09-21",
+       "status": "official",
+       "source": "https://ncre.neea.edu.cn/html1/report/2606/16-1.htm"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-11-06",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年 3 月考试（3月28-30日）成绩于 5月15日开通，约考后 7 周，按此推算"
+      }
+     ]
+    },
+    {
+     "label": "2027 年 3 月",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-12-25",
+       "end": "2027-01-20",
+       "status": "estimate",
+       "source": "",
+       "note": "往年 3 月考试报名于上年 12 月下旬起由各省组织；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-03-27",
+       "end": "2027-03-29",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年 3 月考试为 3月28-30日（周六至周一），按惯例推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-05-14",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年 3 月考试成绩 5月15日开通，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "计算机等级|NCRE"
+  },
+  {
+   "id": "ntce",
+   "name": "中小学教师资格考试",
+   "short": "教资",
+   "category": "教师",
+   "site": "https://ntce.neea.edu.cn/",
+   "sessions": [
+    {
+     "label": "2026 年下半年 笔试",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-07-03",
+       "end": "2026-07-08",
+       "status": "official",
+       "source": "https://ntce.neea.edu.cn/html1/report/2606/25-1.htm",
+       "note": "各省报名时间不同，以本省公告为准；7月3日起报名，河北、江苏等多数省份报名至7月6日、缴费至7月8日"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-09-07",
+       "end": "2026-09-12",
+       "status": "official",
+       "source": "https://www.hebeea.edu.cn/c/2026-06-17/493042.html"
+      },
+      {
+       "type": "考试",
+       "start": "2026-09-12",
+       "end": "",
+       "status": "official",
+       "source": "https://www.hebeea.edu.cn/c/2026-06-17/493042.html"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-11-06",
+       "end": "",
+       "status": "official",
+       "source": "https://www.hebeea.edu.cn/c/2026-06-17/493042.html",
+       "note": "河北、江苏公告：11月6日起查询笔试成绩"
+      }
+     ]
+    },
+    {
+     "label": "2026 年下半年 面试",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-11-06",
+       "end": "2026-11-10",
+       "status": "estimate",
+       "source": "",
+       "note": "上半年面试报名与笔试成绩发布同日开始（4月17日），按此推算；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-12-05",
+       "end": "2026-12-06",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html",
+       "note": "人社部 2026 年度职业资格考试工作计划附件列明"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-01-08",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "上半年面试（5月16-17日）结果于 6月12日公布，约考后 4 周，按此推算"
+      }
+     ]
+    },
+    {
+     "label": "2027 年上半年 笔试",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-01-08",
+       "end": "2027-01-15",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年笔试报名 1月9日开始；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-03-06",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年笔试为 3月7日（3月第一个周六），按此推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-04-16",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年笔试成绩于 4月17日发布，按惯例预估"
+      }
+     ]
+    },
+    {
+     "label": "2027 年上半年 面试",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-04-16",
+       "end": "2027-04-22",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年面试报名 4月17日开始；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-05-15",
+       "end": "2027-05-16",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年面试为 5月16-17日，按惯例推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-06-11",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年面试结果于 6月12日公布，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "教师资格"
+  },
+  {
+   "id": "kuaiji",
+   "name": "全国会计专业技术资格考试",
+   "short": "会计职称",
+   "category": "财会",
+   "site": "https://ausm.mof.gov.cn/index",
+   "sessions": [
+    {
+     "label": "2026 年度 中级",
+     "events": [
+      {
+       "type": "准考证",
+       "start": "2026-08-28",
+       "end": "2026-09-04",
+       "status": "official",
+       "source": "https://www.sz.gov.cn/cn/xxgk/zfxxgj/tzgg/content/post_12959377.html",
+       "note": "深圳考区；各省打印时间不同，以本省通知为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-09-05",
+       "end": "2026-09-06",
+       "status": "official",
+       "source": "http://kzp.mof.gov.cn/content.jsp?infoid=1911&class_id=01_01&child_class_id="
+      },
+      {
+       "type": "成绩",
+       "start": "2026-10-31",
+       "end": "",
+       "status": "official",
+       "source": "https://news.qq.com/rain/a/20260819A0CSIC00",
+       "note": "甘肃考区通知：中级资格成绩 2026年10月31日前公布；全国统一时间以财政部公告为准"
+      }
+     ]
+    },
+    {
+     "label": "2027 年度 初级、高级",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-01-05",
+       "end": "2027-01-25",
+       "status": "estimate",
+       "source": "",
+       "note": "2027 年度考务日程尚未发布；往年初级、高级报名在 1 月进行；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-05-15",
+       "end": "2027-05-17",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年初级为 5月16-18日、高级为 5月16日，按惯例推算（高级仅首日）"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-06-25",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年初级成绩 6月26日公布，按惯例预估"
+      }
+     ]
+    },
+    {
+     "label": "2027 年度 中级",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-06-10",
+       "end": "2027-07-02",
+       "status": "estimate",
+       "source": "",
+       "note": "往年中级报名 6 月中旬至 7 月初（2026 年报名 7月2日截止）；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-09-04",
+       "end": "2027-09-05",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年中级为 9月5-6日（9 月第一个周末），按惯例推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-10-29",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年中级成绩在 10月31日前公布，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "会计专业技术|会计.{0,6}资格"
+  },
+  {
+   "id": "cpa",
+   "name": "注册会计师全国统一考试",
+   "short": "CPA",
+   "category": "财会",
+   "site": "https://cpaexam.cicpa.org.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-04-07",
+       "end": "2026-04-30",
+       "status": "official",
+       "source": "https://www.cicpa.org.cn/xxfb/tzgg/202603/W020260311354851382981.pdf",
+       "note": "4月7日8:00至4月30日20:00"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-08-11",
+       "end": "2026-08-30",
+       "status": "official",
+       "source": "https://www.cicpa.org.cn/xxfb/tzgg/202603/W020260311354851382981.pdf",
+       "note": "8月11日8:00至8月30日17:00"
+      },
+      {
+       "type": "考试",
+       "start": "2026-08-29",
+       "end": "2026-08-30",
+       "status": "official",
+       "source": "https://www.cicpa.org.cn/xxfb/tzgg/202603/W020260311354851382981.pdf",
+       "note": "专业阶段 8月29-30日，综合阶段 8月30日；欧洲考区 9月5-6日"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-11-21",
+       "end": "2026-11-30",
+       "status": "official",
+       "source": "https://www.cicpa.org.cn/xxfb/tzgg/202603/W020260311354851382981.pdf",
+       "note": "报名简章：预计 2026 年 11 月下旬可登录网报系统查询，具体时间以中注协通知为准"
+      }
+     ]
+    },
+    {
+     "label": "2027 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-04-06",
+       "end": "2027-04-30",
+       "status": "estimate",
+       "source": "",
+       "note": "2027 年报名简章尚未发布（往年 3 月发布）；2026 年报名为 4月7-30日，按惯例推算"
+      },
+      {
+       "type": "考试",
+       "start": "2027-08-28",
+       "end": "2027-08-29",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年考试为 8月29-30日（8 月最后一个周末），按惯例推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-11-22",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "往年 11 月下旬公布，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "注册会计师|注会|CPA"
+  },
+  {
+   "id": "fakao",
+   "name": "国家统一法律职业资格考试",
+   "short": "法考",
+   "category": "法律",
+   "site": "https://www.moj.gov.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-06-15",
+       "end": "2026-06-29",
+       "status": "official",
+       "source": "https://www.eol.cn/kaoshi/gwy/flzyzg/202607/t20260710_2754993.shtml",
+       "note": "客观题网上报名 6月15日0时至6月29日18时"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-09-02",
+       "end": "2026-09-11",
+       "status": "official",
+       "source": "https://www.eol.cn/kaoshi/gwy/flzyzg/202607/t20260710_2754993.shtml",
+       "note": "客观题准考证"
+      },
+      {
+       "type": "考试",
+       "start": "2026-09-12",
+       "end": "2026-09-13",
+       "status": "official",
+       "source": "https://www.eol.cn/kaoshi/gwy/flzyzg/202607/t20260710_2754993.shtml",
+       "note": "客观题，分两个批次，系统随机分配"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-09-19",
+       "end": "",
+       "status": "official",
+       "source": "https://finance.sina.cn/2026-09-18/detail-inishkur3096601.d.html",
+       "note": "客观题成绩；全国统一合格分数线 180 分"
+      },
+      {
+       "type": "确认",
+       "start": "2026-09-19",
+       "end": "2026-09-23",
+       "status": "official",
+       "source": "https://finance.sina.cn/2026-09-18/detail-inishkur3096601.d.html",
+       "note": "主观题报名确认及交费，9月19日8时至9月23日18时"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-10-13",
+       "end": "2026-10-17",
+       "status": "official",
+       "source": "https://finance.sina.cn/2026-09-18/detail-inishkur3096601.d.html",
+       "note": "主观题准考证"
+      },
+      {
+       "type": "考试",
+       "start": "2026-10-18",
+       "end": "",
+       "status": "official",
+       "source": "https://finance.sina.cn/2026-09-18/detail-inishkur3096601.d.html",
+       "note": "主观题 9:00-13:00"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-11-25",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "主观题成绩往年于 11 月下旬公布，按惯例预估"
+      }
+     ]
+    },
+    {
+     "label": "2027 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-06-14",
+       "end": "2027-06-28",
+       "status": "estimate",
+       "source": "",
+       "note": "2027 年度公告尚未发布；2026 年客观题报名为 6月15-29日，按惯例推算"
+      },
+      {
+       "type": "考试",
+       "start": "2027-09-11",
+       "end": "2027-09-12",
+       "status": "estimate",
+       "source": "",
+       "note": "客观题；2026 年为 9月12-13日（9 月第二个周末），按惯例推算"
+      },
+      {
+       "type": "考试",
+       "start": "2027-10-17",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "主观题；2026 年为 10月18日（周日），按惯例推算"
+      }
+     ]
+    }
+   ],
+   "keywords": "法律职业资格|法考"
+  },
+  {
+   "id": "ruankao",
+   "name": "计算机技术与软件专业技术资格（水平）考试",
+   "short": "软考",
+   "category": "计算机",
+   "site": "https://www.ruankao.org.cn/",
+   "sessions": [
+    {
+     "label": "2026 年下半年",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-08-17",
+       "end": "2026-09-17",
+       "status": "estimate",
+       "source": "",
+       "note": "各省报名时间不同，以本省公告为准；已核实北京考区提交报名及缴费为 9月11日至17日，其他省份多在 8 月中旬至 9 月中旬"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-10-20",
+       "end": "2026-10-23",
+       "status": "official",
+       "source": "https://rsj.beijing.gov.cn/ywsite/bjpta/zcwj/2026zc/202609/P020260902684766185975.pdf",
+       "note": "北京考区；各省打印时间不同"
+      },
+      {
+       "type": "考试",
+       "start": "2026-10-24",
+       "end": "2026-10-25",
+       "status": "official",
+       "source": "https://www.ruankao.org.cn/article/content/2609211354254868000700041.html",
+       "note": "机考、分批次；年度工作安排列 10月24日至27日，批次安排通告实际为 10月24-25日"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-12-09",
+       "end": "",
+       "status": "official",
+       "source": "https://www.ruankao.org.cn/article/content/2609211354254868000700041.html",
+       "note": "考试结束之日起 45 日内开放成绩查询（最晚约 12月9日）"
+      }
+     ]
+    },
+    {
+     "label": "2027 年上半年",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-03-15",
+       "end": "2027-04-15",
+       "status": "estimate",
+       "source": "",
+       "note": "2027 年工作安排尚未发布；往年上半年报名 3-4 月；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-05-22",
+       "end": "2027-05-25",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年上半年为 5月23日至26日，按惯例推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-07-06",
+       "end": "",
+       "status": "estimate",
+       "source": "",
+       "note": "考后 45 日内开放查询，按此推算"
+      }
+     ]
+    }
+   ],
+   "keywords": "软件资格|软考|计算机技术与软件"
+  },
+  {
+   "id": "yijian",
+   "name": "一级建造师资格考试",
+   "short": "一建",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-06-17",
+       "end": "2026-07-12",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "人社部人事考试中心预计报名时间段；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-09-12",
+       "end": "2026-09-13",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-12-11",
+       "end": "2026-12-20",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "预计 12 月中旬公布"
+      }
+     ]
+    }
+   ],
+   "keywords": "一级建造师"
+  },
+  {
+   "id": "yizao",
+   "name": "一级造价工程师职业资格考试",
+   "short": "一级造价",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-07-24",
+       "end": "2026-08-18",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "人社部人事考试中心预计报名时间段；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-10-17",
+       "end": "2026-10-18",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-12-11",
+       "end": "2026-12-20",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "预计 12 月中旬公布"
+      }
+     ]
+    }
+   ],
+   "keywords": "一级造价|造价工程师"
+  },
+  {
+   "id": "zyyaoshi",
+   "name": "执业药师职业资格考试（药学、中药学）",
+   "short": "执业药师",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-08-04",
+       "end": "2026-08-25",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "人社部人事考试中心预计报名时间段；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-10-31",
+       "end": "2026-11-01",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-12-11",
+       "end": "2026-12-20",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "预计 12 月中旬公布"
+      }
+     ]
+    }
+   ],
+   "keywords": "执业药师"
+  },
+  {
+   "id": "zhuan",
+   "name": "中级注册安全工程师职业资格考试",
+   "short": "注安",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-08-04",
+       "end": "2026-08-25",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "人社部人事考试中心预计报名时间段；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-10-24",
+       "end": "2026-10-25",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-12-21",
+       "end": "2026-12-31",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "预计 12 月下旬公布"
+      }
+     ]
+    }
+   ],
+   "keywords": "安全工程师"
+  },
+  {
+   "id": "jingjishi",
+   "name": "经济专业技术资格考试（初级、中级）",
+   "short": "经济师",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-07-22",
+       "end": "2026-08-12",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "人社部人事考试中心预计报名时间段；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-11-07",
+       "end": "2026-11-08",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html",
+       "note": "高级经济师 2026 年 5月30日已考完"
+      },
+      {
+       "type": "成绩",
+       "start": "2026-12-01",
+       "end": "2026-12-10",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "预计 12 月上旬公布"
+      }
+     ]
+    }
+   ],
+   "keywords": "经济专业技术|经济师"
+  },
+  {
+   "id": "xiaofang",
+   "name": "一级注册消防工程师资格考试",
+   "short": "一级消防",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-08-24",
+       "end": "2026-09-14",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "人社部人事考试中心预计报名时间段；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-11-07",
+       "end": "2026-11-08",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-01-21",
+       "end": "2027-01-31",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "预计 2027 年 1 月下旬公布"
+      }
+     ]
+    }
+   ],
+   "keywords": "消防工程师"
+  },
+  {
+   "id": "kancha",
+   "name": "勘察设计注册工程师资格考试",
+   "short": "勘察设计注册工程师",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2026 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-08-13",
+       "end": "2026-09-01",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "人社部人事考试中心预计报名时间段；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2026-10-31",
+       "end": "2026-11-01",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html",
+       "note": "二级注册结构工程师仅 11月1日"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-01-01",
+       "end": "2027-01-10",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/examNotice/2138.html",
+       "note": "预计 2027 年 1 月上旬公布"
+      }
+     ]
+    }
+   ],
+   "keywords": "勘察设计"
+  },
+  {
+   "id": "shegong",
+   "name": "社会工作者职业水平考试（初级、中级、高级）",
+   "short": "社工",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2027 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-03-08",
+       "end": "2027-03-29",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年度考试（5月23-24日）及成绩（7月下旬）均已结束；2027 年度计划尚未发布，按 2026 年报名 3月9-30日推算；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-05-22",
+       "end": "2027-05-23",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年为 5月23-24日，按惯例推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-07-21",
+       "end": "2027-07-31",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年预计 7 月下旬公布，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "社会工作者"
+  },
+  {
+   "id": "jianli",
+   "name": "监理工程师职业资格考试",
+   "short": "监理",
+   "category": "职业资格",
+   "site": "http://www.cpta.com.cn/",
+   "sessions": [
+    {
+     "label": "2027 年度",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2027-03-11",
+       "end": "2027-03-31",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年度考试（5月16-17日）及成绩（7月下旬）均已结束；2027 年度计划尚未发布，按 2026 年报名 3月12-31日推算；各省报名时间不同，以本省公告为准"
+      },
+      {
+       "type": "考试",
+       "start": "2027-05-15",
+       "end": "2027-05-16",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年为 5月16-17日，按惯例推算"
+      },
+      {
+       "type": "成绩",
+       "start": "2027-07-21",
+       "end": "2027-07-31",
+       "status": "estimate",
+       "source": "",
+       "note": "2026 年预计 7 月下旬公布，按惯例预估"
+      }
+     ]
+    }
+   ],
+   "keywords": "监理工程师"
+  },
+  {
+   "id": "zhengquan",
+   "name": "证券行业专业人员水平评价统一测试",
+   "short": "证券从业",
+   "category": "财会",
+   "site": "https://www.sac.net.cn/",
+   "sessions": [
+    {
+     "label": "2026 年 9 月统一测试",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-08-24",
+       "end": "2026-08-28",
+       "status": "official",
+       "source": "https://www.sac.net.cn/ksdt/202608/t20260814_82152.html",
+       "note": "8月24日15时至8月28日15时"
+      },
+      {
+       "type": "准考证",
+       "start": "2026-09-16",
+       "end": "2026-09-19",
+       "status": "official",
+       "source": "https://www.sac.net.cn/ksdt/202608/t20260814_82152.html"
+      },
+      {
+       "type": "考试",
+       "start": "2026-09-19",
+       "end": "",
+       "status": "official",
+       "source": "https://www.sac.net.cn/ksdt/202608/t20260814_82152.html",
+       "note": "另有面向行业机构人员的月度预约测试（如 10月22日），未逐场收录"
+      }
+     ]
+    }
+   ],
+   "keywords": "证券从业|证券业从业"
+  },
+  {
+   "id": "jijin",
+   "name": "基金从业人员资格考试",
+   "short": "基金从业",
+   "category": "财会",
+   "site": "https://www.amac.org.cn/",
+   "sessions": [
+    {
+     "label": "2026 年 11 月",
+     "events": [
+      {
+       "type": "报名",
+       "start": "2026-11-02",
+       "end": "2026-11-06",
+       "status": "estimate",
+       "source": "",
+       "note": "未查到基金业协会本次报名公告；往年报名约在考前 3 周，按此推算"
+      },
+      {
+       "type": "考试",
+       "start": "2026-11-28",
+       "end": "",
+       "status": "official",
+       "source": "http://www.cpta.com.cn/notice/2128.html",
+       "note": "人社部 2026 年度职业资格考试工作计划附件列明（基金从业 5月23日、11月28日）"
+      }
+     ]
+    }
+   ],
+   "keywords": "基金从业"
+  }
+ ]
+}

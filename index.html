@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<!-- Created by 青云 on 2026/10/21. -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="referrer" content="no-referrer">
+  <title>考试日历 · 报名 考试 成绩一览</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #08080c;
+      --panel: rgba(22,22,32,0.8);
+      --panel-2: rgba(255,255,255,0.03);
+      --hover: rgba(255,255,255,0.045);
+      --line: rgba(255,255,255,0.07);
+      --line-2: rgba(255,255,255,0.14);
+      --text-1: #f1f0f7;
+      --text-2: #aeacc0;
+      --text-3: #737087;
+      --accent: #818cf8;
+      --grad: linear-gradient(120deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+      --grid-dot: rgba(255,255,255,0.045);
+      --glow-1: rgba(129,140,248,0.13);
+      --glow-2: rgba(244,114,182,0.08);
+      --reg: #22c55e;
+      --exam: #f43f5e;
+      --score: #f59e0b;
+      --ticket: #38bdf8;
+      --pre: #a78bfa;
+      --new: #f43f5e;
+      --ok: #22c55e;
+      --err: #ef4444;
+      --kbd-bg: rgba(255,255,255,0.06);
+    }
+    :root[data-theme="light"] {
+      --bg: #f8f8fc;
+      --panel: rgba(255,255,255,0.92);
+      --panel-2: rgba(20,10,60,0.025);
+      --hover: rgba(20,10,60,0.04);
+      --line: rgba(20,10,60,0.08);
+      --line-2: rgba(20,10,60,0.16);
+      --text-1: #16142a;
+      --text-2: #57546d;
+      --text-3: #918ea6;
+      --accent: #4f46e5;
+      --grid-dot: rgba(20,10,60,0.06);
+      --glow-1: rgba(129,140,248,0.1);
+      --glow-2: rgba(244,114,182,0.05);
+      --reg: #16a34a;
+      --exam: #e11d48;
+      --score: #d97706;
+      --ticket: #0284c7;
+      --pre: #7c3aed;
+      --new: #e11d48;
+      --kbd-bg: rgba(20,10,60,0.05);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text-1);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-size: 14px; line-height: 1.55; -webkit-font-smoothing: antialiased; min-height: 100vh;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(600px 400px at 15% -5%, var(--glow-1), transparent 70%),
+        radial-gradient(700px 500px at 95% 0%, var(--glow-2), transparent 70%),
+        radial-gradient(circle, var(--grid-dot) 1px, transparent 1px) 0 0 / 22px 22px;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      background: color-mix(in srgb, var(--bg) 72%, transparent);
+      backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; gap: 20px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 17px; letter-spacing: -0.02em; white-space: nowrap; }
+    .logo-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--grad); display: grid; place-items: center; font-size: 15px; box-shadow: 0 0 20px var(--glow-1); }
+    .logo small { font-weight: 500; font-size: 12px; color: var(--text-3); letter-spacing: 0; }
+    .search {
+      flex: 1; max-width: 520px; margin: 0 auto; display: flex; align-items: center; gap: 8px;
+      background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; height: 36px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow-1); }
+    .search svg { color: var(--text-3); flex: none; }
+    .search input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: var(--text-1); font: inherit; font-size: 13.5px; }
+    .search input::placeholder { color: var(--text-3); }
+    kbd { font-family: inherit; font-size: 11px; color: var(--text-3); background: var(--kbd-bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; }
+    .top-right { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+    .updated { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 6px; }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(34,197,94,0.2); animation: pulse 2s infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(34,197,94,0); } }
+    .icon-btn { width: 34px; height: 34px; border-radius: 9px; background: var(--panel); border: 1px solid var(--line); cursor: pointer; display: grid; place-items: center; color: var(--text-2); flex: none; }
+    .icon-btn:hover { color: var(--text-1); border-color: var(--line-2); }
+    .icon-btn.spin svg { animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Layout ── */
+    .layout { max-width: 1400px; margin: 0 auto; padding: 24px 24px 64px; display: grid; grid-template-columns: 190px minmax(0, 1fr) 290px; gap: 24px; align-items: start; }
+    .side { position: sticky; top: 84px; }
+    .side-title { font-size: 11.5px; color: var(--text-3); padding: 0 10px; margin: 4px 0 8px; letter-spacing: .04em; }
+    .nav-item { width: 100%; display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 8px; border: none; background: none; cursor: pointer; text-align: left; color: var(--text-2); font-size: 13.5px; position: relative; }
+    .nav-item:hover { background: var(--hover); color: var(--text-1); }
+    .nav-item.active { background: var(--panel); color: var(--text-1); box-shadow: inset 0 0 0 1px var(--line); }
+    .nav-item.active::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; border-radius: 2px; background: var(--grad); }
+    .nav-item .count { margin-left: auto; font-size: 11.5px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+    .main-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .main-head h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
+    .main-head h1 span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .main-head p { font-size: 12.5px; color: var(--text-3); margin-top: 4px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel); color: var(--text-2); cursor: pointer; font-size: 13px; white-space: nowrap; }
+    .btn:hover { color: var(--text-1); border-color: var(--line-2); }
+    .btn.primary { color: #fff; border-color: transparent; background: var(--accent); }
+    .btn.primary:hover { filter: brightness(1.1); color: #fff; }
+
+    /* ── 关注 ── */
+    .follow { padding: 12px 14px; margin-bottom: 18px; }
+    .follow-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; color: var(--text-2); flex-wrap: wrap; }
+    .follow-head b { color: var(--text-1); }
+    .follow-head .sp { flex: 1; }
+    .fchips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .fchip { font-size: 12.5px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text-2); cursor: pointer; white-space: nowrap; }
+    .fchip:hover { color: var(--text-1); border-color: var(--line-2); }
+    .fchip.on { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+    .fchip.on::before { content: '★ '; }
+
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+    .muted { color: var(--text-3); }
+    .empty { text-align: center; padding: 40px 0; color: var(--text-3); }
+    .loading { padding: 80px 0; text-align: center; color: var(--text-3); }
+    .section-title { font-size: 13px; color: var(--text-3); margin: 26px 0 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .section-title:first-child { margin-top: 0; }
+    .section-title b { color: var(--text-1); font-size: 15px; }
+    .note { font-size: 12px; color: var(--text-3); margin-top: 10px; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    /* ── KPI ── */
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+    .kpi { padding: 14px 16px; position: relative; overflow: hidden; }
+    .kpi::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--c, var(--accent)); }
+    .kpi .k { font-size: 12px; color: var(--text-3); }
+    .kpi .v { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; margin: 2px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kpi .s { font-size: 12.5px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* ── 正在报名 ── */
+    .open-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .open { padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+    .open .top { display: flex; align-items: baseline; gap: 8px; }
+    .open .top b { font-size: 15px; }
+    .open .top span { font-size: 12px; color: var(--text-3); }
+    .open .left { font-size: 22px; font-weight: 800; color: var(--reg); }
+    .open .left.urgent { color: var(--exam); }
+    .bar { height: 5px; border-radius: 3px; background: var(--hover); overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--reg); }
+    .open .meta { font-size: 12px; color: var(--text-3); display: flex; justify-content: space-between; gap: 8px; }
+    .open a.go { font-size: 12.5px; color: var(--accent); }
+
+    /* ── Event rows ── */
+    .list { display: flex; flex-direction: column; }
+    .ev { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--line); }
+    .ev:last-child { border-bottom: none; }
+    .ev:hover { background: var(--hover); }
+    .ev.past { opacity: .5; }
+    .ev .d { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .ev .d span { display: block; font-size: 11.5px; font-weight: 400; color: var(--text-3); }
+    .ev .t { font-size: 14px; }
+    .ev .t b { font-weight: 600; }
+    .ev .m { font-size: 12px; color: var(--text-3); margin-top: 2px; }
+    .ev .r { font-size: 12.5px; text-align: right; white-space: nowrap; color: var(--text-2); }
+    .ev .r b { color: var(--c); }
+    .type { display: inline-block; font-size: 11px; font-weight: 600; padding: 1px 7px; border-radius: 5px; margin-right: 6px; color: var(--c); background: color-mix(in srgb, var(--c) 13%, transparent); border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); }
+    .est { font-size: 11px; color: var(--score); border: 1px dashed color-mix(in srgb, var(--score) 50%, transparent); border-radius: 5px; padding: 0 5px; margin-left: 4px; }
+
+    /* ── Exam cards ── */
+    .exams { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .exam { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .exam-h { display: flex; align-items: center; gap: 10px; }
+    .exam-h b { font-size: 16px; }
+    .exam-h .cat { font-size: 11.5px; color: var(--text-3); border: 1px solid var(--line); border-radius: 5px; padding: 0 6px; }
+    .exam-h .star { margin-left: auto; cursor: pointer; border: none; background: none; font-size: 17px; color: var(--text-3); }
+    .exam-h .star.on { color: #fbbf24; }
+    .exam .full { font-size: 12px; color: var(--text-3); margin-top: -6px; }
+    .sess { border-top: 1px dashed var(--line); padding-top: 8px; }
+    .sess-l { font-size: 12.5px; color: var(--text-2); font-weight: 600; margin-bottom: 4px; }
+    .step { display: flex; gap: 8px; font-size: 13px; padding: 3px 0; align-items: baseline; }
+    .step.past { opacity: .45; }
+    .step.now { font-weight: 600; }
+    .step .when { color: var(--text-2); font-variant-numeric: tabular-nums; }
+    .step .rel { margin-left: auto; font-size: 12px; color: var(--text-3); white-space: nowrap; }
+    .step.now .rel { color: var(--reg); }
+    .notice-mini { font-size: 12.5px; color: var(--text-3); display: flex; gap: 6px; padding: 2px 0; }
+    .notice-mini a { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .notice-mini a:hover { color: var(--text-1); }
+    .exam-f { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; }
+    .newtag { font-size: 10.5px; font-weight: 700; color: #fff; background: var(--new); border-radius: 4px; padding: 0 5px; flex: none; }
+
+    .news-row { display: flex; gap: 12px; align-items: baseline; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+    .news-row:last-child { border-bottom: none; }
+    .news-row:hover { background: var(--hover); }
+    .news-row .l { flex: 1; min-width: 0; color: var(--text-2); }
+    .news-row:hover .l { color: var(--text-1); }
+    .news-row .r { color: var(--text-3); font-size: 12px; white-space: nowrap; }
+    .chip { font-size: 11px; padding: 1px 6px; border-radius: 5px; background: var(--hover); color: var(--text-2); border: 1px solid var(--line); white-space: nowrap; }
+
+    /* ── Aside ── */
+    .aside { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 14px; }
+    .widget { padding: 14px 16px; }
+    .widget h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+    .w-row { display: flex; justify-content: space-between; gap: 10px; font-size: 12.5px; padding: 5px 0; border-bottom: 1px dashed var(--line); }
+    .w-row:last-child { border-bottom: none; }
+    .w-row .l { color: var(--text-2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .w-row .r { color: var(--text-3); white-space: nowrap; }
+    .st-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; background: var(--ok); }
+    .st-dot.bad { background: var(--err); }
+    .st-dot.stale { background: #f59e0b; }
+    .w-note { font-size: 12px; color: var(--text-3); line-height: 1.65; }
+
+    @media (max-width: 1180px) {
+      .layout { grid-template-columns: 170px minmax(0, 1fr); }
+      .aside { display: none; }
+    }
+    @media (max-width: 860px) {
+      .topbar-inner { padding: 0 16px; gap: 10px; }
+      .logo small, .updated, kbd, .top-right a.icon-btn { display: none; }
+      .logo { font-size: 15px; }
+      .search { min-width: 0; flex: 1 1 0; }
+      .layout { grid-template-columns: minmax(0, 1fr); padding: 16px 16px 48px; gap: 16px; }
+      .side { position: static; }
+      .side-title { display: none; }
+      .side nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+      .nav-item { width: auto; white-space: nowrap; }
+      .nav-item .count { margin-left: 4px; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .exams { grid-template-columns: minmax(0, 1fr); }
+      .ev { grid-template-columns: 70px minmax(0, 1fr); padding: 11px 12px; gap: 10px; }
+      .ev .r { grid-column: 2; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo"><div class="logo-mark">📝</div>考试日历 <small>报名 · 考试 · 成绩</small></div>
+      <label class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="搜索考试，如 考研、教资、一建…" autocomplete="off">
+        <kbd>⌘K</kbd>
+      </label>
+      <div class="top-right">
+        <div class="updated"><i class="live-dot"></i><span id="updated">读取中…</span></div>
+        <button class="icon-btn" id="reload" title="重新读取数据"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></button>
+        <a class="icon-btn" href="https://github.com/climb0516/exam-calendar/actions/workflows/scrape.yml" target="_blank" rel="noopener" title="到 GitHub Actions 手动触发抓取">⚡</a>
+        <button class="icon-btn" id="theme" title="切换深浅色">☾</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="side">
+      <div class="side-title">视图</div>
+      <nav id="nav"></nav>
+    </aside>
+    <main id="main"><div class="loading">加载中…</div></main>
+    <aside class="aside" id="aside"></aside>
+  </div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('ec:' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('ec:' + k, JSON.stringify(v)); } catch {} },
+};
+const WEEK = ['日', '一', '二', '三', '四', '五', '六'];
+const TYPE_COLOR = { '预报名': 'var(--pre)', '报名': 'var(--reg)', '确认': 'var(--pre)', '准考证': 'var(--ticket)', '考试': 'var(--exam)', '成绩': 'var(--score)' };
+// 官网公告 → 考试：标题命中这些词就挂到对应考试下（exams.json 里的 keywords 优先）
+const KW = { '考研': '研考|硕士研究生|研究生招生考试', '国考': '国考|国家公务员|中央机关', '四六级': '四、六级|四六级|CET', '计算机等级': '计算机等级|NCRE',
+  '教资': '教师资格', '会计': '会计专业技术|会计.{0,6}资格', '注会': '注册会计师|注会|CPA', '法考': '法律职业资格|法考', '软考': '软件资格|软考|计算机技术与软件',
+  '一建': '一级建造师', '一造': '一级造价|造价工程师', '执业药师': '执业药师', '经济师': '经济专业技术|经济师', '社工': '社会工作者', '监理': '监理工程师', '注安': '安全工程师' };
+
+let E = null, D = null;
+const state = { view: store.get('view', 'home'), q: '', onlyFollow: store.get('onlyFollow', false) };
+let follow = new Set(store.get('follow', []));
+
+// ── 日期 ──
+const cstToday = () => new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+const diffDays = (a, b) => Math.round((new Date(a + 'T00:00:00Z') - new Date(b + 'T00:00:00Z')) / 86400e3);
+const wd = iso => WEEK[new Date(iso + 'T00:00:00Z').getUTCDay()];
+const md = iso => `${+iso.slice(5, 7)}/${+iso.slice(8, 10)}`;
+const span = e => e.end && e.end !== e.start ? `${md(e.start)}–${md(e.end)}` : md(e.start);
+function phase(e, today = cstToday()) {
+  const end = e.end || e.start;
+  if (diffDays(today, e.start) < 0) return 'future';
+  if (diffDays(end, today) >= 0) return 'now';
+  return 'past';
+}
+function relText(e) {
+  const t = cstToday(), p = phase(e, t), end = e.end || e.start;
+  if (p === 'future') { const n = diffDays(e.start, t); return n === 1 ? '明天开始' : `${n} 天后`; }
+  if (p === 'now') { const n = diffDays(end, t); return e.end && e.end !== e.start ? (n === 0 ? '今天截止' : `还剩 ${n} 天`) : '就是今天'; }
+  const n = diffDays(t, end); return n === 1 ? '昨天' : `${n} 天前`;
+}
+function ago(t) {
+  const s = (Date.now() - new Date(t)) / 1000;
+  if (s < 3600) return Math.max(1, Math.round(s / 60)) + ' 分钟前';
+  if (s < 86400) return Math.round(s / 3600) + ' 小时前';
+  return Math.round(s / 86400) + ' 天前';
+}
+
+// ── 数据整理 ──
+function prep() {
+  E.exams.forEach(x => {
+    x.kw = new RegExp(x.keywords || KW[x.short] || x.short.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    x.events = x.sessions.flatMap(s => s.events.map(e => ({ ...e, exam: x, session: s.label })));
+  });
+  E.events = E.exams.flatMap(x => x.events).sort((a, b) => a.start.localeCompare(b.start));
+  const t = cstToday();
+  D.notices.forEach(n => {
+    n.when = n.date || n.first_seen || '';
+    n.isNew = !!n.first_seen && diffDays(t, n.first_seen) < 7 || (n.date && diffDays(t, n.date) < 3);
+    n.exams = E.exams.filter(x => x.kw.test(n.title));
+  });
+}
+const followed = x => !state.onlyFollow || !follow.size || follow.has(x.id);
+const qOk = x => !state.q || [x.name, x.short, x.category].join(' ').toLowerCase().includes(state.q);
+const examOk = x => followed(x) && qOk(x);
+
+// ── 片段 ──
+function eventRow(e) {
+  const c = TYPE_COLOR[e.type] || 'var(--accent)', p = phase(e);
+  return `<div class="ev ${p === 'past' ? 'past' : ''}">
+    <div class="d">${span(e)}<span>${e.end && e.end !== e.start ? `周${wd(e.start)} 起` : '周' + wd(e.start)}</span></div>
+    <div><div class="t"><span class="type" style="--c:${c}">${esc(e.type)}</span><b>${esc(e.exam.short)}</b> <span class="muted">${esc(e.session)}</span>${e.status === 'estimate' ? '<span class="est">预估</span>' : ''}</div>
+      ${e.note ? `<div class="m">${esc(e.note)}</div>` : ''}</div>
+    <div class="r" style="--c:${c}">${p === 'now' ? `<b>${relText(e)}</b>` : relText(e)}</div></div>`;
+}
+function followBar() {
+  return `<div class="card follow"><div class="follow-head"><b>我关注的考试</b><span class="muted">点选标星，选择保存在本机浏览器</span><span class="sp"></span>
+      <label style="display:flex;gap:6px;align-items:center;cursor:pointer"><input type="checkbox" id="onlyFollow" ${state.onlyFollow ? 'checked' : ''} ${follow.size ? '' : 'disabled'}> 只看关注的</label>
+      <button class="btn" id="ics" title="下载 .ics 文件，导入手机日历">📅 加到手机日历</button></div>
+    <div class="fchips">${E.exams.map(x => `<button class="fchip ${follow.has(x.id) ? 'on' : ''}" data-follow="${esc(x.id)}">${esc(x.short)}</button>`).join('')}</div></div>`;
+}
+
+// ── 视图：概览 ──
+function viewHome() {
+  const t = cstToday();
+  const evs = E.events.filter(e => examOk(e.exam));
+  const open = evs.filter(e => ['报名', '预报名', '确认'].includes(e.type) && phase(e, t) === 'now').sort((a, b) => (a.end || a.start).localeCompare(b.end || b.start));
+  const nextExam = evs.find(e => e.type === '考试' && phase(e, t) !== 'past');
+  const nextScore = evs.find(e => e.type === '成绩' && phase(e, t) !== 'past');
+  const nextReg = evs.find(e => e.type === '报名' && phase(e, t) === 'future');
+  const soon = evs.filter(e => phase(e, t) !== 'past' && diffDays(e.start, t) <= 45 && !open.includes(e));
+  const fresh = D.notices.filter(n => n.isNew && (!n.exams.length || n.exams.some(examOk)));
+  const kpi = (c, k, v, s) => `<div class="card kpi" style="--c:${c}"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+  return `<div class="main-head"><div><h1>别错过<span>报名截止</span></h1><p>考研、国考、四六级、教资、会计、建造师……报名、考试、成绩时间一页看全</p></div></div>
+    ${followBar()}
+    <div class="kpis">
+      ${kpi('var(--reg)', '正在报名', `${open.length} 项`, open[0] ? `最近截止：${esc(open[0].exam.short)} ${md(open[0].end || open[0].start)}` : '目前没有在报名的')}
+      ${kpi('var(--exam)', '下一场考试', nextExam ? relText(nextExam) : '—', nextExam ? `${esc(nextExam.exam.short)} · ${span(nextExam)}` : '')}
+      ${kpi('var(--score)', '下一次出成绩', nextScore ? relText(nextScore) : '—', nextScore ? `${esc(nextScore.exam.short)} · ${md(nextScore.start)}${nextScore.status === 'estimate' ? '（预估）' : ''}` : '')}
+      ${kpi('var(--pre)', '下一个开始报名', nextReg ? relText(nextReg) : '—', nextReg ? `${esc(nextReg.exam.short)} · ${md(nextReg.start)}` : '')}
+    </div>
+    <div class="section-title"><b>🟢 正在报名</b><span>按截止时间排序</span></div>
+    ${open.length ? `<div class="open-grid">${open.map(e => {
+      const end = e.end || e.start, total = Math.max(1, diffDays(end, e.start) + 1), used = diffDays(t, e.start) + 1, left = diffDays(end, t);
+      return `<div class="card open"><div class="top"><b>${esc(e.exam.short)}</b><span>${esc(e.session)} · ${esc(e.type)}</span></div>
+        <div class="left ${left <= 2 ? 'urgent' : ''}">${left === 0 ? '今天截止' : `还剩 ${left} 天`}</div>
+        <div class="bar"><i style="width:${Math.min(100, used / total * 100)}%"></i></div>
+        <div class="meta"><span>${span(e)}${e.status === 'estimate' ? '（预估）' : ''}</span>${e.exam.site ? `<a class="go" href="${esc(e.exam.site)}" target="_blank" rel="noopener">去报名 →</a>` : ''}</div>
+        ${e.note ? `<div class="meta"><span>${esc(e.note)}</span></div>` : ''}</div>`;
+    }).join('')}</div>` : '<div class="card empty">目前没有正在报名的考试</div>'}
+    <div class="section-title"><b>⏳ 接下来 45 天</b></div>
+    ${soon.length ? `<div class="card list">${soon.map(eventRow).join('')}</div>` : '<div class="card empty">接下来 45 天没有安排</div>'}
+    ${fresh.length ? `<div class="section-title"><b>🆕 官网新公告</b><span>近 7 天</span></div><div class="card list">${fresh.slice(0, 10).map(noticeRow).join('')}</div>` : ''}`;
+}
+
+// ── 视图：时间线 ──
+function viewTimeline() {
+  const t = cstToday();
+  const showPast = state.showPast;
+  const evs = E.events.filter(e => examOk(e.exam) && (showPast || phase(e, t) !== 'past'));
+  const months = [...new Set(evs.map(e => e.start.slice(0, 7)))];
+  return `<div class="main-head"><div><h1>🗓 时间线</h1><p>按月份排列所有报名、考试、成绩节点</p></div>
+      <button class="btn" id="togglePast">${showPast ? '隐藏已过去的' : '显示已过去的'}</button></div>
+    ${followBar()}
+    ${months.map(m => `<div class="section-title"><b>${m.slice(0, 4)} 年 ${+m.slice(5)} 月</b><span>${evs.filter(e => e.start.startsWith(m)).length} 项</span></div>
+      <div class="card list">${evs.filter(e => e.start.startsWith(m)).map(eventRow).join('')}</div>`).join('') || '<div class="card empty">没有符合条件的日程</div>'}`;
+}
+
+// ── 视图：考试一览 ──
+function viewExams() {
+  const t = cstToday();
+  const cats = [...new Set(E.exams.map(x => x.category))];
+  const list = E.exams.filter(examOk);
+  return `<div class="main-head"><div><h1>📚 考试一览</h1><p>每门考试的报名、考试、成绩时间，以及官网最新公告</p></div></div>
+    ${followBar()}
+    ${cats.map(c => {
+      const xs = list.filter(x => x.category === c);
+      if (!xs.length) return '';
+      return `<div class="section-title"><b>${esc(c)}</b><span>${xs.length} 门</span></div><div class="exams">${xs.map(x => {
+        const ns = D.notices.filter(n => n.exams.includes(x)).slice(0, 3);
+        const sessions = x.sessions.filter(s => s.events.some(e => phase(e, t) !== 'past') || state.showPast);
+        const shown = sessions.length ? sessions : x.sessions.slice(-1);
+        return `<div class="card exam"><div class="exam-h"><b>${esc(x.short)}</b><span class="cat">${esc(x.category)}</span>
+            <button class="star ${follow.has(x.id) ? 'on' : ''}" data-follow="${esc(x.id)}" title="关注">${follow.has(x.id) ? '★' : '☆'}</button></div>
+          <div class="full">${esc(x.name)}</div>
+          ${shown.map(s => `<div class="sess"><div class="sess-l">${esc(s.label)}</div>${s.events.map(e => {
+            const p = phase({ ...e }, t);
+            return `<div class="step ${p}"><span class="type" style="--c:${TYPE_COLOR[e.type]}">${esc(e.type)}</span><span class="when">${span(e)}</span>${e.status === 'estimate' ? '<span class="est">预估</span>' : ''}
+              ${e.source ? `<a class="muted" href="${esc(e.source)}" target="_blank" rel="noopener" title="来源">↗</a>` : ''}<span class="rel">${relText(e)}</span></div>`;
+          }).join('')}</div>`).join('')}
+          ${ns.length ? `<div class="sess">${ns.map(n => `<div class="notice-mini">${n.isNew ? '<span class="newtag">新</span>' : ''}<a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></div>`).join('')}</div>` : ''}
+          <div class="exam-f">${x.site ? `<a class="btn" href="${esc(x.site)}" target="_blank" rel="noopener">官网 / 报名入口 →</a>` : ''}</div></div>`;
+      }).join('')}</div>`;
+    }).join('') || '<div class="card empty">没有符合条件的考试</div>'}`;
+}
+
+// ── 视图：官网公告 ──
+function noticeRow(n) {
+  return `<a class="news-row" href="${esc(n.url)}" target="_blank" rel="noopener"><span class="l">${n.isNew ? '<span class="newtag">新</span> ' : ''}${n.exams.slice(0, 1).map(x => `<span class="chip">${esc(x.short)}</span> `).join('')}${esc(n.title)}</span>
+    <span class="r">${esc(n.source)}${n.when ? ' · ' + md(n.when) : ''}</span></a>`;
+}
+function viewNotices() {
+  const ns = D.notices.filter(n => (!n.exams.length || n.exams.some(followed)) && (!state.q || (n.title + n.source).toLowerCase().includes(state.q)));
+  const official = ns.filter(n => !n.news), news = ns.filter(n => n.news);
+  return `<div class="main-head"><div><h1>📣 最新公告</h1><p>各考试官网每天抓取；国考、注会、法考官网抓不到，用新闻补充</p></div></div>
+    <div class="section-title"><b>官网公告</b><span>${official.length} 条</span></div>
+    ${official.length ? `<div class="card list">${official.map(noticeRow).join('')}</div>` : '<div class="card empty">暂无</div>'}
+    <div class="section-title"><b>新闻动态</b><span>近 30 天</span></div>
+    ${news.length ? `<div class="card list">${news.map(noticeRow).join('')}</div>` : '<div class="card empty">暂无</div>'}`;
+}
+
+// ── 日历文件（.ics） ──
+function downloadICS() {
+  const xs = E.exams.filter(x => !follow.size || follow.has(x.id));
+  const t = cstToday();
+  const d8 = iso => iso.replace(/-/g, '');
+  const plus1 = iso => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + 1); return d.toISOString().slice(0, 10); };
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//exam-calendar//CN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:考试日历'];
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
+  const icsText = s => s.replace(/\\/g, '\\\\').replace(/[,;]/g, m => '\\' + m).replace(/\n/g, '\\n');   // RFC 5545 文本转义
+  const add = (uid, start, end, title, desc, alarmDays) => {
+    lines.push('BEGIN:VEVENT', `UID:${uid}@exam-calendar`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d8(start)}`, `DTEND;VALUE=DATE:${d8(plus1(end || start))}`,
+      `SUMMARY:${icsText(title)}`, `DESCRIPTION:${icsText(desc)}`);
+    if (alarmDays != null) lines.push('BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${title}`, `TRIGGER:-P${alarmDays}D`, 'END:VALARM');
+    lines.push('END:VEVENT');
+  };
+  xs.flatMap(x => x.events).filter(e => (e.end || e.start) >= t).forEach((e, i) => {
+    const base = `${e.exam.short} ${e.session} ${e.type}${e.status === 'estimate' ? '（预估）' : ''}`;
+    const desc = [e.note, e.exam.site, e.source].filter(Boolean).join('\n');
+    add(`${e.exam.id}-${i}`, e.start, e.end, base, desc, e.type === '考试' ? 1 : 0);
+    if (['报名', '预报名', '确认'].includes(e.type) && e.end && e.end !== e.start)
+      add(`${e.exam.id}-${i}-end`, e.end, e.end, `⚠️ ${e.exam.short}${e.type}截止`, desc, 1);
+  });
+  lines.push('END:VCALENDAR');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' }));
+  a.download = '考试日历.ics';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+// ── 导航、右栏 ──
+const VIEWS = {
+  home:     { name: '🏠 概览', render: viewHome, count: () => E.events.filter(e => examOk(e.exam) && ['报名', '预报名', '确认'].includes(e.type) && phase(e) === 'now').length || '' },
+  timeline: { name: '🗓 时间线', render: viewTimeline, count: () => '' },
+  exams:    { name: '📚 考试一览', render: viewExams, count: () => E.exams.length },
+  notices:  { name: '📣 最新公告', render: viewNotices, count: () => D.notices.filter(n => n.isNew).length ? D.notices.filter(n => n.isNew).length + ' 新' : '' },
+};
+function renderAside() {
+  const t = cstToday();
+  const exams = E.events.filter(e => e.type === '考试' && phase(e, t) !== 'past' && examOk(e.exam)).slice(0, 6);
+  $('#aside').innerHTML = `
+    <div class="card widget"><h3>⏰ 考试倒计时</h3>${exams.map(e => `<div class="w-row"><span class="l">${esc(e.exam.short)} · ${md(e.start)}</span><span class="r">${relText(e)}</span></div>`).join('') || '<div class="w-note">暂无</div>'}</div>
+    <div class="card widget"><h3>🛰 公告来源</h3>${Object.entries(D.sources).map(([k, s]) => `<div class="w-row"><span class="l"><i class="st-dot ${s.ok ? '' : s.stale ? 'stale' : 'bad'}"></i>${esc(s.name === '新闻' ? ({ guokao: '国考', cpa: '注会', fakao: '法考' }[k] || k) + '（新闻）' : s.name)}</span><span class="r">${s.ok ? s.count + ' 条' : s.stale ? '旧数据' : '失败'}</span></div>`).join('')}</div>
+    <div class="card widget"><h3>ℹ️ 说明</h3><p class="w-note">日程来自各考试官方公告，人工核对后录入；标「预估」的是官方还没公布、按往年惯例推算的。按省报名的考试（教资、会计、软考、职业资格等）各省时间不同，以本省公告为准。官网公告每天北京时间 08:30 更新。</p></div>`;
+}
+function render() {
+  if (!E || !D) return;
+  if (!VIEWS[state.view]) state.view = 'home';
+  $('#nav').innerHTML = Object.entries(VIEWS).map(([k, v]) => `<button class="nav-item ${state.view === k ? 'active' : ''}" data-go="${k}">${v.name}<span class="count">${v.count()}</span></button>`).join('');
+  $('#main').innerHTML = VIEWS[state.view].render();
+  renderAside();
+}
+
+// ── 交互 ──
+document.addEventListener('click', e => {
+  const go = e.target.closest('[data-go]');
+  if (go) { state.view = go.dataset.go; store.set('view', state.view); render(); window.scrollTo({ top: 0 }); return; }
+  const f = e.target.closest('[data-follow]');
+  if (f) {
+    const id = f.dataset.follow;
+    follow.has(id) ? follow.delete(id) : follow.add(id);
+    store.set('follow', [...follow]);
+    if (!follow.size) { state.onlyFollow = false; store.set('onlyFollow', false); }
+    render(); return;
+  }
+  if (e.target.closest('#ics')) { downloadICS(); return; }
+  if (e.target.closest('#togglePast')) { state.showPast = !state.showPast; render(); }
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'onlyFollow') { state.onlyFollow = e.target.checked; store.set('onlyFollow', state.onlyFollow); render(); }
+});
+$('#q').addEventListener('input', e => { state.q = e.target.value.trim().toLowerCase(); render(); });
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('#q').focus(); }
+  if (e.key === 'Escape' && document.activeElement === $('#q')) { $('#q').value = ''; state.q = ''; render(); $('#q').blur(); }
+});
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  $('#theme').textContent = t === 'light' ? '☀' : '☾';
+}
+applyTheme(store.get('theme', 'dark'));
+$('#theme').onclick = () => { const t = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'; store.set('theme', t); applyTheme(t); };
+
+async function load() {
+  const btn = $('#reload');
+  btn.classList.add('spin');
+  try {
+    const [re, rd] = await Promise.all([fetch('exams.json', { cache: 'no-cache' }), fetch('data.json', { cache: 'no-cache' })]);
+    if (!re.ok) throw new Error('exams.json ' + re.status);
+    E = await re.json();
+    D = rd.ok ? await rd.json() : { notices: [], sources: {}, updated: null };
+    prep();
+    $('#updated').textContent = D.updated ? '公告更新于 ' + ago(D.updated) : '公告暂无';
+    render();
+  } catch (err) {
+    console.warn('[ExamCalendar]', err);
+    if (!E) $('#main').innerHTML = `<div class="card empty">数据读取失败（${esc(err.message)}），稍后点右上角 ↻ 重试</div>`;
+  } finally {
+    btn.classList.remove('spin');
+  }
+}
+$('#reload').onclick = load;
+load();
+setInterval(() => { if (D?.updated) $('#updated').textContent = '公告更新于 ' + ago(D.updated); }, 60 * 1000);
+</script>
+</body>
+</html>
