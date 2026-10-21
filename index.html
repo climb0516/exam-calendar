@@ -486,7 +486,7 @@ function renderAside() {
   const exams = E.events.filter(e => e.type === '考试' && phase(e, t) !== 'past' && examOk(e.exam)).slice(0, 6);
   $('#aside').innerHTML = `
     <div class="card widget"><h3>⏰ 考试倒计时</h3>${exams.map(e => `<div class="w-row"><span class="l">${esc(e.exam.short)} · ${md(e.start)}</span><span class="r">${relText(e)}</span></div>`).join('') || '<div class="w-note">暂无</div>'}</div>
-    <div class="card widget"><h3>🛰 公告来源</h3>${Object.entries(D.sources).map(([k, s]) => `<div class="w-row"><span class="l"><i class="st-dot ${s.ok ? '' : s.stale ? 'stale' : 'bad'}"></i>${esc(s.name === '新闻' ? ({ guokao: '国考', cpa: '注会', fakao: '法考' }[k] || k) + '（新闻）' : s.name)}</span><span class="r">${s.ok ? s.count + ' 条' : s.stale ? '旧数据' : '失败'}</span></div>`).join('')}</div>
+    <div class="card widget"><h3>🛰 公告来源</h3>${Object.entries(D.sources).map(([k, s]) => `<div class="w-row"><span class="l"><i class="st-dot ${s.ok ? '' : s.stale ? 'stale' : 'bad'}"></i>${esc(s.name === '新闻' ? ({ guokao: '国考', cpa: '注会', fakao: '法考', kuaiji: '会计职称', zhiye: '职业资格', ruankao: '软考' }[k] || k) + '（新闻）' : s.name)}</span><span class="r">${s.ok ? s.count + ' 条' : s.stale ? '旧数据' : '失败'}</span></div>`).join('')}</div>
     <div class="card widget"><h3>ℹ️ 说明</h3><p class="w-note">日程来自各考试官方公告，人工核对后录入；标「预估」的是官方还没公布、按往年惯例推算的。按省报名的考试（教资、会计、软考、职业资格等）各省时间不同，以本省公告为准。官网公告每天北京时间 08:30 更新。</p></div>`;
 }
 function render() {

@@ -31,13 +31,20 @@ SITES = [
     {"key": "rk",    "name": "软考官网",          "url": "https://www.ruankao.org.cn/", "include": r"软件资格|软考|计算机技术与软件|计算机化考试", "exclude": r"会议|座谈|调研|召开"},
 ]
 # 官网抓不到的考试：Google / Bing 新闻
+# （人事考试网、会计资格评价网、软考官网对 GitHub Actions 的海外 IP 返回 405 / 超时，也用新闻兜底）
 NEWS = {
     "guokao": ["国考 报名", "国家公务员考试 公告"],
     "cpa":    ["注册会计师 全国统一考试", "注会 考试 成绩", "CPA 考试 报名"],
     "fakao":  ["法律职业资格考试 报名", "法考 成绩公布"],
+    "kuaiji": ["会计职称 考试 成绩", "会计专业技术资格考试 报名"],
+    "zhiye":  ["职业资格考试 成绩公布", "一级建造师 考试", "执业药师 考试", "经济师 考试"],
+    "ruankao": ["软考 成绩", "软考 报名", "计算机软件资格考试"],
 }
-NEWS_MUST = {"guokao": r"国考|国家公务员|中央机关", "cpa": r"注册会计师|CPA|注会", "fakao": r"法律职业资格|法考"}
-NEWS_EXCLUDE = re.compile(r"培训|课程|网课|押题|真题|答案|机构|班|广告|怎么备考|备考攻略|经验")
+NEWS_MUST = {"guokao": r"国考|国家公务员|中央机关", "cpa": r"注册会计师|CPA|注会", "fakao": r"法律职业资格|法考",
+             "kuaiji": r"会计.{0,4}(?:职称|资格)", "ruankao": r"软考|软件资格",
+             "zhiye": r"职业资格|建造师|造价工程师|执业药师|经济师|经济专业技术|安全工程师|消防工程师|社会工作者|监理工程师|勘察设计"}
+NEWS_EXCLUDE = re.compile(r"培训|课程|网课|押题|真题|答案|机构|班|广告|怎么备考|备考攻略|攻略|经验|教育提醒|教育网")
+NEWS_SKIP = {"zhiye": re.compile(r"法律职业资格|法考")}     # 法考单独一组，别混进「职业资格」
 
 # ── 工具 ──────────────────────────────────────────────────────────────────────
 
@@ -151,7 +158,8 @@ def news(exam):
             continue
         t = it["title"]
         key = re.sub(r"[^一-龥A-Za-z0-9]", "", t)[:18]
-        if pub < cutoff or key in seen or not re.search(NEWS_MUST[exam], t) or NEWS_EXCLUDE.search(t):
+        if pub < cutoff or key in seen or not re.search(NEWS_MUST[exam], t) or NEWS_EXCLUDE.search(t) \
+                or (exam in NEWS_SKIP and NEWS_SKIP[exam].search(t)):
             continue
         seen.add(key)
         out.append({"site": exam, "source": it["source"] or "新闻", "title": t, "url": it["url"],
