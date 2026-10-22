@@ -167,7 +167,7 @@
     .bar { height: 5px; border-radius: 3px; background: var(--hover); overflow: hidden; }
     .bar i { display: block; height: 100%; background: var(--reg); }
     .open .meta { font-size: 12px; color: var(--text-3); display: flex; justify-content: space-between; gap: 8px; }
-    .open a.go { font-size: 12.5px; color: var(--accent); }
+    .open .go { font-size: 12.5px; color: var(--accent); }
 
     /* ── Event rows ── */
     .list { display: flex; flex-direction: column; }
@@ -231,7 +231,7 @@
 
     @media (max-width: 1180px) {
       .layout { grid-template-columns: 170px minmax(0, 1fr); }
-      .aside { display: none; }
+      .aside { grid-column: 2; position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); align-items: start; }   /* 右栏挪到正文下面，倒计时、来源手机上也能看到 */
     }
     @media (max-width: 860px) {
       .topbar-inner { padding: 0 16px; gap: 10px; }
@@ -240,6 +240,7 @@
       .search { min-width: 0; flex: 1 1 0; }
       .layout { grid-template-columns: minmax(0, 1fr); padding: 16px 16px 48px; gap: 16px; }
       .side { position: static; }
+      .aside { grid-column: auto; }
       .side-title { display: none; }
       .side nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
       .nav-item { width: auto; white-space: nowrap; }
@@ -249,6 +250,105 @@
       .ev { grid-template-columns: 70px minmax(0, 1fr); padding: 11px 12px; gap: 10px; }
       .ev .r { grid-column: 2; text-align: left; }
     }
+    /* ── 详情抽屉 + 列表页（通用组件 kit：电脑右侧滑出，手机底部升起；地址 #/item/类型/id、#/list/key） ── */
+    :root { --kit-bg: var(--bg, #0b0a10); --kit-panel: var(--panel, var(--card, rgba(255,255,255,.04))); --kit-line: var(--line, var(--sep, rgba(255,255,255,.08)));
+      --kit-line2: var(--line-2, rgba(255,255,255,.14)); --kit-t1: var(--text-1, #f1eff7); --kit-t2: var(--text-2, #a39fb3); --kit-t3: var(--text-3, #6b677a);
+      --kit-accent: var(--accent, #a3e635); --kit-hover: var(--hover, rgba(255,255,255,.05)); }
+    .kit-mask { position: fixed; inset: 0; z-index: 90; background: rgba(0,0,0,.38); display: none; }
+    .kit-mask.open { display: block; }
+    .kit-sheet { position: absolute; top: 12px; right: 12px; bottom: 12px; width: clamp(440px, 42vw, 620px); max-width: calc(100vw - 24px);
+      display: flex; flex-direction: column; overflow: hidden; color: var(--kit-t1); border-radius: 18px;
+      background: linear-gradient(var(--kit-panel), var(--kit-panel)), var(--kit-bg); box-shadow: 0 0 0 1px var(--kit-line2), 0 24px 60px rgba(0,0,0,.45);
+      animation: kit-in .24s ease-out; }
+    @keyframes kit-in { from { transform: translateX(40px); opacity: 0; } }
+    .kit-x { position: absolute; top: 12px; right: 12px; z-index: 3; width: 32px; height: 32px; border-radius: 50%; border: 0; cursor: pointer;
+      background: rgba(0,0,0,.5); color: #fff; font-size: 15px; display: grid; place-items: center; }
+    .kit-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; }
+    .kit-cover { aspect-ratio: 16/9; background: var(--kit-hover) center / cover no-repeat; position: relative; }
+    .kit-cover.tall { aspect-ratio: auto; height: 280px; background-size: contain; background-color: #000; }
+    .kit-cover.ph { display: grid; place-items: center; font-size: 56px; aspect-ratio: 16/6; }
+    .kit-head { padding: 18px 20px 4px; display: flex; gap: 14px; align-items: flex-start; }
+    .kit-head .kit-thumb { flex-shrink: 0; width: 64px; height: 64px; border-radius: 14px; background: var(--kit-hover) center / cover no-repeat;
+      display: grid; place-items: center; font-size: 28px; overflow: hidden; }
+    .kit-head .kit-t { flex: 1; min-width: 0; padding-right: 30px; }
+    .kit-cover + .kit-head .kit-t { padding-right: 0; }
+    .kit-head h2 { font-size: 19px; font-weight: 800; line-height: 1.35; letter-spacing: -0.01em; }
+    .kit-sub { color: var(--kit-t2); font-size: 13px; margin-top: 4px; }
+    .kit-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .kit-tags span { font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 6px; background: var(--kit-hover); color: var(--kit-t2); }
+    .kit-big { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+    .kit-big b { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+    .kit-body { padding: 4px 20px 20px; }
+    .kit-sec { padding-top: 16px; }
+    .kit-sec + .kit-sec { margin-top: 6px; border-top: 1px solid var(--kit-line); }
+    .kit-sec h4 { font-size: 14.5px; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .kit-sec h4 small { font-size: 12px; color: var(--kit-t3); font-weight: 500; }
+    .kit-kv { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+    .kit-kv div { background: var(--kit-hover); border-radius: 10px; padding: 8px 11px; min-width: 0; }
+    .kit-kv small { display: block; font-size: 11px; color: var(--kit-t3); }
+    .kit-kv b { display: block; font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; }
+    .kit-p { font-size: 13.5px; line-height: 1.75; color: var(--kit-t2); white-space: pre-line; }
+    .kit-rows { display: flex; flex-direction: column; }
+    .kit-row { display: flex; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid var(--kit-line); font-size: 13px; text-decoration: none; color: inherit; }
+    .kit-row:first-child { border-top: 0; }
+    .kit-row[data-kit-go], a.kit-row { cursor: pointer; }
+    .kit-row[data-kit-go]:hover .kit-rt, a.kit-row:hover .kit-rt { color: var(--kit-accent); }
+    .kit-row .kit-rt { flex: 1; min-width: 0; line-height: 1.45; }
+    .kit-row .kit-rm { color: var(--kit-t3); font-size: 12px; white-space: nowrap; }
+    .kit-row img, .kit-row .kit-ri { width: 54px; height: 40px; border-radius: 6px; object-fit: cover; flex-shrink: 0; background: var(--kit-hover); }
+    .kit-acts { flex-shrink: 0; display: flex; gap: 10px; padding: 12px 20px 16px; border-top: 1px solid var(--kit-line); }
+    .kit-acts a, .kit-acts button { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 12px; border-radius: 11px;
+      font: inherit; font-size: 13.5px; font-weight: 700; text-decoration: none; cursor: pointer; border: 1px solid var(--kit-line2); color: var(--kit-t1); background: transparent; }
+    .kit-acts .pri { background: var(--kit-accent); border-color: var(--kit-accent); color: #111; }
+    .kit-acts a:hover, .kit-acts button:hover { filter: brightness(1.08); }
+    /* 列表页 */
+    .kit-lhead { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .kit-back { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--kit-line2); background: transparent; color: var(--kit-t1);
+      font-size: 20px; cursor: pointer; display: grid; place-items: center; flex-shrink: 0; }
+    .kit-back:hover { background: var(--kit-hover); }
+    .kit-lhead h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+    .kit-lhead small { color: var(--kit-t3); font-size: 12.5px; margin-left: 2px; }
+    .kit-lbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+    .kit-chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+    .kit-chips a, .kit-chips button { padding: 5px 12px; border-radius: 8px; background: var(--kit-hover); color: var(--kit-t2); font: inherit; font-size: 13px;
+      font-weight: 600; white-space: nowrap; border: 0; cursor: pointer; text-decoration: none; }
+    .kit-chips .on { background: var(--kit-t1); color: var(--kit-bg); }
+    .kit-chips small { opacity: .6; margin-left: 4px; font-weight: 500; }
+    .kit-sel { padding: 6px 10px; border-radius: 9px; border: 1px solid var(--kit-line2); background: transparent; color: var(--kit-t1); font: inherit; font-size: 12.5px; font-weight: 600; }
+    .kit-sel option { background: var(--kit-bg); }
+    .kit-more { display: block; margin: 16px auto 0; padding: 9px 22px; border-radius: 10px; border: 1px solid var(--kit-line2); background: transparent;
+      color: var(--kit-t1); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .kit-more:hover { background: var(--kit-hover); }
+    .kit-morelink { font-size: 13px; font-weight: 600; color: var(--kit-t2); text-decoration: none; white-space: nowrap; cursor: pointer; }
+    .kit-morelink:hover { color: var(--kit-t1); }
+    [data-kit-item] { cursor: pointer; }
+    @media (max-width: 760px) {
+      .kit-sheet { top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-width: none; height: 86vh; border-radius: 18px 18px 0 0; animation: kit-up .26s ease-out; }
+      @keyframes kit-up { from { transform: translateY(30%); opacity: .5; } }
+      .kit-head { padding: 16px 16px 4px; } .kit-body { padding: 4px 16px 18px; } .kit-acts { padding: 10px 16px 16px; }
+      .kit-cover.tall { height: 220px; }
+      .kit-head .kit-thumb { width: 46px; height: 46px; border-radius: 12px; font-size: 22px; }
+      .kit-head h2 { font-size: 17.5px; }
+      .kit-big b { font-size: 24px; }
+      .kit-lhead h2 { font-size: 19px; }
+    }
+    /* 站内：详情 / 列表页的补充样式 */
+    .section-title .kit-morelink, .main-head .kit-morelink { margin-left: auto; }
+    .ev, .open, .exam, .w-row[data-kit-item], .kpi[data-kit-item] { cursor: pointer; }
+    .open:hover, .exam:hover, .kpi[data-kit-item]:hover { border-color: var(--line-2); }
+    .w-row[data-kit-item]:hover .l { color: var(--text-1); }
+    .kit-tl { display: flex; flex-direction: column; gap: 2px; }
+    .kit-tl .sl { font-size: 12.5px; font-weight: 700; color: var(--text-2); margin: 10px 0 4px; }
+    .kit-tl .sl:first-child { margin-top: 0; }
+    .kit-tl .st { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 4px 8px; align-items: baseline; padding: 7px 10px; border-radius: 9px; background: var(--hover); font-size: 13px; }
+    .kit-tl .st.past { opacity: .5; }
+    .kit-tl .st.now { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--reg) 55%, transparent); }
+    .kit-tl .st .when { font-variant-numeric: tabular-nums; font-weight: 600; }
+    .kit-tl .st .rel { font-size: 12px; color: var(--text-3); white-space: nowrap; }
+    .kit-tl .st.now .rel { color: var(--reg); font-weight: 600; }
+    .kit-tl .st .nt { grid-column: 2 / -1; font-size: 12px; color: var(--text-3); }
+    .kit-tl .st .nt a { color: var(--accent); }
+    .kit-chips.sub { margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -279,6 +379,133 @@
   </div>
 
 <script>
+// ── kit：详情抽屉 + 列表页路由（各站通用，内联在页面里）──
+// 用法：
+//   KIT.item('news', id => ({ title, sub, cover, thumb, tags:[], big, body:'<div class="kit-sec">…</div>', acts:[{text, href, pri}] }))
+//   KIT.list('news', (param, query) => { … 把列表页 HTML 写进容器 … })
+//   条目元素加 data-kit-item="news/<id>" 即可点击打开详情；「查看更多」写成 <a href="#/list/news">
+//   站点首页渲染函数里先调用 KIT.route() —— 返回 true 表示当前是列表页（已渲染），首页不用再渲染
+const KIT = (() => {
+  const items = {}, lists = {};
+  let mask, homeY = 0, fromHome = 0, lastHash = location.hash, onHome = null, listBox = null;
+  const kesc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const parse = h => {
+    const m = (h === undefined ? location.hash : h).match(/^#\/(item|list)\/([^?]+?)(?:\?(.*))?$/);
+    if (!m) return null;
+    const [type, ...rest] = m[2].split('/');
+    return { kind: m[1], type: decodeURIComponent(type), id: rest.map(decodeURIComponent).join('/'), q: new URLSearchParams(m[3] || '') };
+  };
+  function ensure() {
+    if (mask) return;
+    mask = document.createElement('div');
+    mask.className = 'kit-mask';
+    mask.innerHTML = '<div class="kit-sheet" role="dialog" aria-modal="true"></div>';
+    document.body.appendChild(mask);
+    mask.addEventListener('click', e => { if (e.target === mask || e.target.closest('[data-kit-close]')) close(); });
+  }
+  function render(d) {
+    ensure();
+    const cover = d.cover ? `<div class="kit-cover ${d.coverTall ? 'tall' : ''}" style="background-image:url('${kesc(d.cover).replace(/'/g, '%27')}')"></div>`
+      : d.coverIcon ? `<div class="kit-cover ph" style="background:${d.coverBg || 'var(--kit-hover)'}">${d.coverIcon}</div>` : '';
+    const thumb = !d.cover && !d.coverIcon && (d.thumb || d.thumbIcon)
+      ? `<div class="kit-thumb" style="${d.thumb ? `background-image:url('${kesc(d.thumb).replace(/'/g, '%27')}')` : ''}${d.thumbBg ? `;background-color:${d.thumbBg}` : ''}">${d.thumb ? '' : d.thumbIcon}</div>` : '';
+    const acts = (d.acts || []).filter(a => a && (a.href || a.onclick));
+    mask.firstElementChild.innerHTML = `<button class="kit-x" data-kit-close aria-label="关闭">✕</button>
+      <div class="kit-scroll">${cover}
+        <div class="kit-head">${thumb}<div class="kit-t"><h2>${kesc(d.title)}</h2>${d.sub ? `<div class="kit-sub">${d.sub}</div>` : ''}
+          ${(d.tags || []).filter(Boolean).length ? `<div class="kit-tags">${d.tags.filter(Boolean).join('')}</div>` : ''}${d.big ? `<div class="kit-big">${d.big}</div>` : ''}</div></div>
+        <div class="kit-body">${d.body || ''}</div></div>
+      ${acts.length ? `<div class="kit-acts">${acts.map((a, i) => a.href
+        ? `<a class="${a.pri || (i === 0 && acts.length < 3) ? 'pri' : ''}" href="${kesc(a.href)}" ${a.self ? '' : 'target="_blank" rel="noopener"'}>${a.text}</a>`
+        : `<button class="${a.pri ? 'pri' : ''}" data-kit-act="${i}">${a.text}</button>`).join('')}</div>` : ''}`;
+    acts.forEach((a, i) => { if (!a.href) { const b = mask.querySelector(`[data-kit-act="${i}"]`); if (b) b.onclick = a.onclick; } });
+    mask.querySelector('.kit-scroll').scrollTop = 0;
+    mask.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  // 打开详情：写进地址（可分享；浏览器返回 = 关闭）
+  function open(key) {
+    const target = '#/item/' + key;
+    if (location.hash === target) return show(parse(target));
+    ensure();
+    if (parse()?.kind === 'item') history.replaceState(history.state, '', target);
+    else { mask.dataset.base = location.hash; history.pushState({ kit: 1 }, '', target); }
+    lastHash = target;
+    show(parse(target));
+  }
+  function show(r) {
+    const fn = items[r.type];
+    const d = fn && fn(r.id, r.q);
+    if (!d) { close(true); return false; }
+    render(d);
+    return true;
+  }
+  function close(silent) {
+    if (!mask || !mask.classList.contains('open')) return;
+    mask.classList.remove('open');
+    document.body.style.overflow = '';
+    if (!silent && parse()?.kind === 'item') {
+      if (history.state && history.state.kit) history.back();          // 从页面里点开的：退回去
+      else { history.replaceState(null, '', mask.dataset.base || location.pathname + location.search); lastHash = location.hash; }   // 直接打开的分享链接
+    }
+  }
+  // 当前地址是列表页时渲染列表页并返回 true；首页时返回 false
+  function route(box) {
+    if (box) listBox = box;
+    const r = parse();
+    if (r && r.kind === 'list' && lists[r.type]) { lists[r.type](r.id, r.q, listBox); return true; }
+    return false;
+  }
+  // 列表页的公共外壳：返回按钮 + 标题 + 子分类 + 排序
+  function shell({ title, note, chips, sort, sortVal, body, more }) {
+    return `<div class="kit-lhead"><button class="kit-back" data-kit-back title="返回">‹</button><h2>${kesc(title)}</h2>${note ? `<small>${note}</small>` : ''}</div>
+      ${chips || sort ? `<div class="kit-lbar"><div class="kit-chips">${(chips || []).map(c => `<a class="${c.on ? 'on' : ''}" href="${kesc(c.href)}">${kesc(c.text)}${c.count != null ? `<small>${c.count}</small>` : ''}</a>`).join('')}</div>
+        ${sort ? `<select class="kit-sel" data-kit-sort>${sort.map(([v, n]) => `<option value="${kesc(v)}" ${v === sortVal ? 'selected' : ''}>${kesc(n)}</option>`).join('')}</select>` : ''}</div>` : ''}
+      ${body}${more ? `<button class="kit-more" data-kit-more>${more}</button>` : ''}`;
+  }
+  function init(home) {
+    onHome = home;
+    document.addEventListener('click', e => {
+      const t = e.target.closest('[data-kit-item],[data-kit-go],[data-kit-back]');
+      if (!t) return;
+      const inner = e.target.closest('a[href],button,input,select,label,summary');   // 卡片里的其它按钮 / 链接（关注、复制…）优先
+      if (inner && inner !== t && t.contains(inner)) return;
+      e.preventDefault();
+      if (t.dataset.kitBack !== undefined) { fromHome && history.length > fromHome ? history.go(-fromHome) : (location.hash = ''); return; }
+      open(t.dataset.kitItem || t.dataset.kitGo);
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    window.addEventListener('hashchange', () => {
+      const r = parse();
+      let was = parse(lastHash), steps = 1;
+      if (was && was.kind === 'item') {                                 // 从详情离开
+        const base = mask && mask.dataset.base !== undefined ? mask.dataset.base : '';
+        if (location.hash === base) { lastHash = location.hash; close(true); return; }   // 只是关掉详情，底下页面不动
+        was = parse(base); steps = 2;                                   // 在详情里点了别的列表：按详情底下那页算，返回要退两步
+      }
+      lastHash = location.hash;
+      if (r && r.kind === 'item') { show(r); return; }
+      close(true);
+      const wasHome = !was;
+      if (r && r.kind === 'list') {
+        if (wasHome) { homeY = scrollY; fromHome = steps; }
+        onHome && onHome();
+        if (wasHome || was.type !== r.type) scrollTo(0, 0);
+      } else {
+        onHome && onHome();
+        if (fromHome) { scrollTo(0, homeY); fromHome = 0; }
+      }
+    });
+    // 直接打开带 #/item/ 的链接（比如大屏跳过来）：页面数据读完后由站点调用 KIT.boot()
+  }
+  function boot() { const r = parse(); if (r && r.kind === 'item') show(r); }
+  return { item: (t, fn) => (items[t] = fn), list: (t, fn) => (lists[t] = fn), open, close, route, shell, init, boot, parse, esc: kesc,
+    // 小工具：详情里的键值格、段落、关联列表
+    kv: rows => { const r = rows.filter(x => x && x[1] != null && x[1] !== ''); return r.length ? `<div class="kit-kv">${r.map(([k, v]) => `<div><small>${kesc(k)}</small><b title="${kesc(v)}">${kesc(v)}</b></div>`).join('')}</div>` : ''; },
+    sec: (title, html, note) => html ? `<div class="kit-sec"><h4>${title}${note ? `<small>${note}</small>` : ''}</h4>${html}</div>` : '',
+    p: t => t ? `<p class="kit-p">${kesc(t)}</p>` : '',
+  };
+})();
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const store = {
@@ -322,6 +549,8 @@ function ago(t) {
 }
 
 // ── 数据整理 ──
+// 公告详情 id：url 的短哈希（同一条公告每次抓取都一样，可分享）
+const nid = u => { let h = 5381; for (const c of String(u)) h = (h * 33 ^ c.codePointAt(0)) >>> 0; return h.toString(36); };
 function prep() {
   E.exams.forEach(x => {
     x.kw = new RegExp(x.keywords || KW[x.short] || x.short.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
@@ -330,6 +559,7 @@ function prep() {
   E.events = E.exams.flatMap(x => x.events).sort((a, b) => a.start.localeCompare(b.start));
   const t = cstToday();
   D.notices.forEach(n => {
+    n.id = nid(n.url);
     n.when = n.date || n.first_seen || '';
     n.isNew = !!n.first_seen && diffDays(t, n.first_seen) < 7 || (n.date && diffDays(t, n.date) < 3);
     n.exams = E.exams.filter(x => x.kw.test(n.title));
@@ -342,7 +572,7 @@ const examOk = x => followed(x) && qOk(x);
 // ── 片段 ──
 function eventRow(e) {
   const c = TYPE_COLOR[e.type] || 'var(--accent)', p = phase(e);
-  return `<div class="ev ${p === 'past' ? 'past' : ''}">
+  return `<div class="ev ${p === 'past' ? 'past' : ''}" data-kit-item="exam/${esc(e.exam.id)}">
     <div class="d">${span(e)}<span>${e.end && e.end !== e.start ? `周${wd(e.start)} 起` : '周' + wd(e.start)}</span></div>
     <div><div class="t"><span class="type" style="--c:${c}">${esc(e.type)}</span><b>${esc(e.exam.short)}</b> <span class="muted">${esc(e.session)}</span>${e.status === 'estimate' ? '<span class="est">预估</span>' : ''}</div>
       ${e.note ? `<div class="m">${esc(e.note)}</div>` : ''}</div>
@@ -365,27 +595,27 @@ function viewHome() {
   const nextReg = evs.find(e => e.type === '报名' && phase(e, t) === 'future');
   const soon = evs.filter(e => phase(e, t) !== 'past' && diffDays(e.start, t) <= 45 && !open.includes(e));
   const fresh = D.notices.filter(n => n.isNew && (!n.exams.length || n.exams.some(examOk)));
-  const kpi = (c, k, v, s) => `<div class="card kpi" style="--c:${c}"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+  const kpi = (c, k, v, s, e) => `<div class="card kpi" style="--c:${c}" ${e ? `data-kit-item="exam/${esc(e.exam.id)}"` : ''}><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
   return `<div class="main-head"><div><h1>别错过<span>报名截止</span></h1><p>考研、国考、四六级、教资、会计、建造师……报名、考试、成绩时间一页看全</p></div></div>
     ${followBar()}
     <div class="kpis">
-      ${kpi('var(--reg)', '正在报名', `${open.length} 项`, open[0] ? `最近截止：${esc(open[0].exam.short)} ${md(open[0].end || open[0].start)}` : '目前没有在报名的')}
-      ${kpi('var(--exam)', '下一场考试', nextExam ? relText(nextExam) : '—', nextExam ? `${esc(nextExam.exam.short)} · ${span(nextExam)}` : '')}
-      ${kpi('var(--score)', '下一次出成绩', nextScore ? relText(nextScore) : '—', nextScore ? `${esc(nextScore.exam.short)} · ${md(nextScore.start)}${nextScore.status === 'estimate' ? '（预估）' : ''}` : '')}
-      ${kpi('var(--pre)', '下一个开始报名', nextReg ? relText(nextReg) : '—', nextReg ? `${esc(nextReg.exam.short)} · ${md(nextReg.start)}` : '')}
+      ${kpi('var(--reg)', '正在报名', `${open.length} 项`, open[0] ? `最近截止：${esc(open[0].exam.short)} ${md(open[0].end || open[0].start)}` : '目前没有在报名的', open[0])}
+      ${kpi('var(--exam)', '下一场考试', nextExam ? relText(nextExam) : '—', nextExam ? `${esc(nextExam.exam.short)} · ${span(nextExam)}` : '', nextExam)}
+      ${kpi('var(--score)', '下一次出成绩', nextScore ? relText(nextScore) : '—', nextScore ? `${esc(nextScore.exam.short)} · ${md(nextScore.start)}${nextScore.status === 'estimate' ? '（预估）' : ''}` : '', nextScore)}
+      ${kpi('var(--pre)', '下一个开始报名', nextReg ? relText(nextReg) : '—', nextReg ? `${esc(nextReg.exam.short)} · ${md(nextReg.start)}` : '', nextReg)}
     </div>
-    <div class="section-title"><b>🟢 正在报名</b><span>按截止时间排序</span></div>
+    <div class="section-title"><b>🟢 正在报名</b><span>按截止时间排序</span><a class="kit-morelink" href="#/list/timeline?type=报名">全部报名安排 →</a></div>
     ${open.length ? `<div class="open-grid">${open.map(e => {
       const end = e.end || e.start, total = Math.max(1, diffDays(end, e.start) + 1), used = diffDays(t, e.start) + 1, left = diffDays(end, t);
-      return `<div class="card open"><div class="top"><b>${esc(e.exam.short)}</b><span>${esc(e.session)} · ${esc(e.type)}</span></div>
+      return `<div class="card open" data-kit-item="exam/${esc(e.exam.id)}"><div class="top"><b>${esc(e.exam.short)}</b><span>${esc(e.session)} · ${esc(e.type)}</span></div>
         <div class="left ${left <= 2 ? 'urgent' : ''}">${left === 0 ? '今天截止' : `还剩 ${left} 天`}</div>
         <div class="bar"><i style="width:${Math.min(100, used / total * 100)}%"></i></div>
-        <div class="meta"><span>${span(e)}${e.status === 'estimate' ? '（预估）' : ''}</span>${e.exam.site ? `<a class="go" href="${esc(e.exam.site)}" target="_blank" rel="noopener">去报名 →</a>` : ''}</div>
+        <div class="meta"><span>${span(e)}${e.status === 'estimate' ? '（预估）' : ''}</span><span class="go">报名入口 ›</span></div>
         ${e.note ? `<div class="meta"><span>${esc(e.note)}</span></div>` : ''}</div>`;
     }).join('')}</div>` : '<div class="card empty">目前没有正在报名的考试</div>'}
-    <div class="section-title"><b>⏳ 接下来 45 天</b></div>
+    <div class="section-title"><b>⏳ 接下来 45 天</b><a class="kit-morelink" href="#/list/timeline">全部日程 →</a></div>
     ${soon.length ? `<div class="card list">${soon.map(eventRow).join('')}</div>` : '<div class="card empty">接下来 45 天没有安排</div>'}
-    ${fresh.length ? `<div class="section-title"><b>🆕 官网新公告</b><span>近 7 天</span></div><div class="card list">${fresh.slice(0, 10).map(noticeRow).join('')}</div>` : ''}`;
+    ${fresh.length ? `<div class="section-title"><b>🆕 新公告</b><span>近 7 天 ${fresh.length} 条</span><a class="kit-morelink" href="#/list/notices">全部 ${D.notices.length} 条公告 →</a></div><div class="card list">${fresh.slice(0, 10).map(noticeRow).join('')}</div>` : ''}`;
 }
 
 // ── 视图：时间线 ──
@@ -395,7 +625,7 @@ function viewTimeline() {
   const evs = E.events.filter(e => examOk(e.exam) && (showPast || phase(e, t) !== 'past'));
   const months = [...new Set(evs.map(e => e.start.slice(0, 7)))];
   return `<div class="main-head"><div><h1>🗓 时间线</h1><p>按月份排列所有报名、考试、成绩节点</p></div>
-      <button class="btn" id="togglePast">${showPast ? '隐藏已过去的' : '显示已过去的'}</button></div>
+      <div style="display:flex;gap:8px;align-items:center"><a class="btn" href="#/list/timeline">按类型筛选 →</a><button class="btn" id="togglePast">${showPast ? '隐藏已过去的' : '显示已过去的'}</button></div></div>
     ${followBar()}
     ${months.map(m => `<div class="section-title"><b>${m.slice(0, 4)} 年 ${+m.slice(5)} 月</b><span>${evs.filter(e => e.start.startsWith(m)).length} 项</span></div>
       <div class="card list">${evs.filter(e => e.start.startsWith(m)).map(eventRow).join('')}</div>`).join('') || '<div class="card empty">没有符合条件的日程</div>'}`;
@@ -412,41 +642,145 @@ function viewExams() {
       const xs = list.filter(x => x.category === c);
       if (!xs.length) return '';
       return `<div class="section-title"><b>${esc(c)}</b><span>${xs.length} 门</span></div><div class="exams">${xs.map(x => {
-        const ns = D.notices.filter(n => n.exams.includes(x)).slice(0, 3);
+        const all = D.notices.filter(n => n.exams.includes(x)), ns = all.slice(0, 3);
         const sessions = x.sessions.filter(s => s.events.some(e => phase(e, t) !== 'past') || state.showPast);
         const shown = sessions.length ? sessions : x.sessions.slice(-1);
-        return `<div class="card exam"><div class="exam-h"><b>${esc(x.short)}</b><span class="cat">${esc(x.category)}</span>
+        return `<div class="card exam" data-kit-item="exam/${esc(x.id)}"><div class="exam-h"><b>${esc(x.short)}</b><span class="cat">${esc(x.category)}</span>
             <button class="star ${follow.has(x.id) ? 'on' : ''}" data-follow="${esc(x.id)}" title="关注">${follow.has(x.id) ? '★' : '☆'}</button></div>
           <div class="full">${esc(x.name)}</div>
           ${shown.map(s => `<div class="sess"><div class="sess-l">${esc(s.label)}</div>${s.events.map(e => {
             const p = phase({ ...e }, t);
             return `<div class="step ${p}"><span class="type" style="--c:${TYPE_COLOR[e.type]}">${esc(e.type)}</span><span class="when">${span(e)}</span>${e.status === 'estimate' ? '<span class="est">预估</span>' : ''}
-              ${e.source ? `<a class="muted" href="${esc(e.source)}" target="_blank" rel="noopener" title="来源">↗</a>` : ''}<span class="rel">${relText(e)}</span></div>`;
+              <span class="rel">${relText(e)}</span></div>`;
           }).join('')}</div>`).join('')}
-          ${ns.length ? `<div class="sess">${ns.map(n => `<div class="notice-mini">${n.isNew ? '<span class="newtag">新</span>' : ''}<a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></div>`).join('')}</div>` : ''}
-          <div class="exam-f">${x.site ? `<a class="btn" href="${esc(x.site)}" target="_blank" rel="noopener">官网 / 报名入口 →</a>` : ''}</div></div>`;
+          ${ns.length ? `<div class="sess">${ns.map(n => `<div class="notice-mini">${n.isNew ? '<span class="newtag">新</span>' : ''}<a href="#/item/notice/${n.id}" data-kit-item="notice/${n.id}">${esc(n.title)}</a></div>`).join('')}</div>` : ''}
+          <div class="exam-f">${all.length > ns.length ? `<a class="btn" href="#/list/notices?exam=${esc(x.id)}">全部 ${all.length} 条公告 →</a>` : ''}<span class="btn">详情 / 报名入口 ›</span></div></div>`;
       }).join('')}</div>`;
     }).join('') || '<div class="card empty">没有符合条件的考试</div>'}`;
 }
 
 // ── 视图：官网公告 ──
 function noticeRow(n) {
-  return `<a class="news-row" href="${esc(n.url)}" target="_blank" rel="noopener"><span class="l">${n.isNew ? '<span class="newtag">新</span> ' : ''}${n.exams.slice(0, 1).map(x => `<span class="chip">${esc(x.short)}</span> `).join('')}${esc(n.title)}</span>
+  return `<a class="news-row" href="#/item/notice/${n.id}" data-kit-item="notice/${n.id}"><span class="l">${n.isNew ? '<span class="newtag">新</span> ' : ''}${n.exams.slice(0, 1).map(x => `<span class="chip">${esc(x.short)}</span> `).join('')}${esc(n.title)}</span>
     <span class="r">${esc(n.source)}${n.when ? ' · ' + md(n.when) : ''}</span></a>`;
 }
 function viewNotices() {
   const ns = D.notices.filter(n => (!n.exams.length || n.exams.some(followed)) && (!state.q || (n.title + n.source).toLowerCase().includes(state.q)));
   const official = ns.filter(n => !n.news), news = ns.filter(n => n.news);
   return `<div class="main-head"><div><h1>📣 最新公告</h1><p>各考试官网每天抓取；国考、注会、法考官网抓不到，用新闻补充</p></div></div>
-    <div class="section-title"><b>官网公告</b><span>${official.length} 条</span></div>
-    ${official.length ? `<div class="card list">${official.map(noticeRow).join('')}</div>` : '<div class="card empty">暂无</div>'}
-    <div class="section-title"><b>新闻动态</b><span>近 30 天</span></div>
-    ${news.length ? `<div class="card list">${news.map(noticeRow).join('')}</div>` : '<div class="card empty">暂无</div>'}`;
+    <div class="section-title"><b>官网公告</b><span>${official.length} 条</span><a class="kit-morelink" href="#/list/notices?kind=official">全部 ${official.length} 条 →</a></div>
+    ${official.length ? `<div class="card list">${official.slice(0, 12).map(noticeRow).join('')}</div>` : '<div class="card empty">暂无</div>'}
+    <div class="section-title"><b>新闻动态</b><span>近 30 天 ${news.length} 条</span><a class="kit-morelink" href="#/list/notices?kind=news">全部 ${news.length} 条 →</a></div>
+    ${news.length ? `<div class="card list">${news.slice(0, 12).map(noticeRow).join('')}</div>` : '<div class="card empty">暂无</div>'}`;
 }
 
+// ── 详情（右侧抽屉）与列表页 ──
+const CAT_ICON = { 升学: '🎓', 公务员: '🏛', 语言: '🔤', 计算机: '💻', 教师: '🍎', 财会: '🧮', 法律: '⚖️', 职业资格: '📜' };
+const REG_TYPES = ['报名', '预报名', '确认'];
+const tag = t => t ? `<span>${esc(t)}</span>` : '';
+const ctag = (t, c) => `<span style="color:${c};background:color-mix(in srgb, ${c} 14%, transparent)">${esc(t)}</span>`;
+const noticeKitRow = n => `<div class="kit-row" data-kit-go="notice/${n.id}"><span class="kit-rt">${n.isNew ? '<span class="newtag">新</span> ' : ''}${esc(n.title)}</span>
+  <span class="kit-rm">${esc(n.source)}${n.when ? ' · ' + md(n.when) : ''}</span></div>`;
+// 某门考试眼下最该看的节点：正在进行的 > 下一个
+function examFocus(x, t = cstToday()) {
+  return x.events.find(e => phase(e, t) === 'now') || x.events.filter(e => phase(e, t) === 'future').sort((a, b) => a.start.localeCompare(b.start))[0];
+}
+const examKitRow = x => { const f = examFocus(x);
+  return `<div class="kit-row" data-kit-go="exam/${esc(x.id)}"><span class="kit-rt"><b>${esc(x.short)}</b> <span class="muted">${esc(x.name)}</span></span><span class="kit-rm">${f ? `${esc(f.type)} ${relText(f)}` : '本年度已结束'}</span></div>`; };
+
+KIT.item('exam', id => {
+  const x = E?.exams.find(o => o.id === id); if (!x) return null;
+  const t = cstToday(), f = examFocus(x, t);
+  const regNow = x.events.find(e => REG_TYPES.includes(e.type) && phase(e, t) === 'now');
+  const nextExam = x.events.filter(e => e.type === '考试' && phase(e, t) !== 'past').sort((a, b) => a.start.localeCompare(b.start))[0];
+  const ns = D.notices.filter(n => n.exams.includes(x));
+  return { title: x.name, sub: `${esc(x.short)} · ${esc(x.category)} · ${x.sessions.length} 个场次`,
+    thumbIcon: CAT_ICON[x.category] || '📝', thumbBg: 'color-mix(in srgb, var(--accent) 16%, transparent)',
+    tags: [follow.has(x.id) ? ctag('★ 已关注', 'var(--accent)') : '', regNow ? ctag(`正在${regNow.type} · ${relText(regNow)}`, 'var(--reg)') : '', tag(x.category)],
+    big: f ? `<b style="color:${TYPE_COLOR[f.type] || 'var(--accent)'}">${relText(f)}</b><span class="muted">${esc(f.session)} ${esc(f.type)} · ${span(f)}${f.status === 'estimate' ? '（预估）' : ''}</span>`
+      : '<span class="muted">已公布的安排都已结束，等新一年度公告</span>',
+    body: KIT.sec('要点', KIT.kv([['简称', x.short], ['分类', x.category], ['下一场考试', nextExam ? `${span(nextExam)} · ${relText(nextExam)}` : ''], ['相关公告', ns.length ? ns.length + ' 条' : '']]))
+      + KIT.sec('全部时间安排', `<div class="kit-tl">${x.sessions.map(s => `<div class="sl">${esc(s.label)}</div>${s.events.map(e => {
+          const p = phase(e, t);
+          return `<div class="st ${p}"><span class="type" style="--c:${TYPE_COLOR[e.type] || 'var(--accent)'}">${esc(e.type)}</span>
+            <span class="when">${span(e)} <span class="muted" style="font-weight:400">周${wd(e.start)}</span>${e.status === 'estimate' ? '<span class="est">预估</span>' : '<span class="muted" style="font-weight:400;font-size:11.5px;margin-left:6px">官方</span>'}</span>
+            <span class="rel">${relText(e)}</span>${e.note || e.source ? `<div class="nt">${esc(e.note || '')}${e.source ? ` <a href="${esc(e.source)}" target="_blank" rel="noopener">公告 ↗</a>` : ''}</div>` : ''}</div>`;
+        }).join('')}`).join('')}</div>`, '官方 = 有公告；预估 = 按往年推算')
+      + KIT.sec('相关公告', ns.length ? `<div class="kit-rows">${ns.slice(0, 8).map(noticeKitRow).join('')}</div>` : KIT.p('官网和新闻里暂时没抓到这门考试的公告。'),
+        ns.length > 8 ? `<a class="kit-morelink" href="#/list/notices?exam=${esc(x.id)}">全部 ${ns.length} 条 →</a>` : '')
+      + KIT.sec('说明', KIT.p(`${E.note || ''}${/职业资格|财会|教师|计算机/.test(x.category) ? '\n这门考试按省组织，报名时间各省不同，以本省人事考试网 / 教育考试院公告为准。' : ''}`)),
+    acts: [{ text: regNow ? '去报名 ↗' : '官网 / 报名入口 ↗', href: x.site, pri: true },
+      { text: follow.has(x.id) ? '★ 已关注' : '☆ 关注', onclick: () => { toggleFollow(x.id); KIT.open('exam/' + x.id); } },
+      { text: '📅 加到日历', onclick: () => downloadICS(x) }] };
+});
+KIT.item('notice', id => {
+  const n = D?.notices.find(o => o.id === id); if (!n) return null;
+  const same = (n.exams.length ? D.notices.filter(o => o !== n && o.exams.some(x => n.exams.includes(x))) : D.notices.filter(o => o !== n && o.site === n.site));
+  const x1 = n.exams.length === 1 ? n.exams[0] : null;
+  return { title: n.title, sub: `${esc(n.source)}${n.when ? ' · ' + n.when : ''}${!n.date && n.first_seen ? '（本站首次抓到）' : ''}`,
+    thumbIcon: n.news ? '📰' : '📣', thumbBg: `color-mix(in srgb, ${n.news ? 'var(--ticket)' : 'var(--accent)'} 16%, transparent)`,
+    tags: [n.isNew ? ctag('新', 'var(--new)') : '', tag(n.news ? '新闻报道' : '官网公告'), ...n.exams.map(x => tag(x.short))],
+    body: (n.desc ? KIT.sec('摘要', KIT.p(n.desc)) : '')
+      + KIT.sec('说明', KIT.p(n.news ? '这条是按关键词从新闻里聚合来的报道，正文在原网站；报名、考试时间以考试官网公告为准。'
+        : `这条是从「${n.source}」首页抓到的公告标题，正文在官网。${n.date ? '' : '官网列表里没写发布日期。'}`))
+      + (n.exams.length ? KIT.sec('所属考试', `<div class="kit-rows">${n.exams.map(examKitRow).join('')}</div>`) : '')
+      + KIT.sec(n.exams.length ? '同考试其它公告' : `${esc(n.source)}其它公告`, same.length ? `<div class="kit-rows">${same.slice(0, 6).map(noticeKitRow).join('')}</div>` : '',
+        same.length > 6 ? `<a class="kit-morelink" href="#/list/notices?${x1 ? 'exam=' + esc(x1.id) : 'src=' + encodeURIComponent(n.source)}">全部 ${same.length + 1} 条 →</a>` : ''),
+    acts: [{ text: '阅读原文 ↗', href: n.url, pri: true }, x1?.site ? { text: `${esc(x1.short)} 官网 ↗`, href: x1.site } : null] };
+});
+
+// 列表页
+const LPAGE = 30;
+let listN = LPAGE;
+// 在当前列表地址上改一个参数（v 为空则去掉）
+const qHref = (base, q, k, v) => { const p = new URLSearchParams(q); v ? p.set(k, v) : p.delete(k); const s = p.toString(); return base + (s ? '?' + s : ''); };
+KIT.list('notices', (_, q, box) => {
+  const kind = q.get('kind') || '', ex = q.get('exam') || '', src = q.get('src') || '', sort = q.get('sort') || 'new';
+  const okKind = (n, k = kind) => !k || (k === 'news') === !!n.news;
+  const okExam = (n, k = ex) => !k || n.exams.some(x => x.id === k);
+  const okSrc = n => !src || n.source === src;
+  const okQ = n => !state.q || (n.title + n.source).toLowerCase().includes(state.q);
+  const all = D.notices.filter(n => okKind(n) && okExam(n) && okSrc(n) && okQ(n))
+    .sort((a, b) => (sort === 'old' ? 1 : -1) * (a.when || '').localeCompare(b.when || ''));
+  const x = E.exams.find(o => o.id === ex);
+  const examCount = k => D.notices.filter(n => okKind(n) && okExam(n, k) && okSrc(n) && okQ(n)).length;
+  const srcs = [...new Set(D.notices.filter(n => okKind(n) && okExam(n)).map(n => n.source))];
+  box.innerHTML = KIT.shell({ title: x ? `${x.short} 相关公告` : '全部公告', note: `${all.length} 条 · 官网每天抓取，抓不到的用新闻补充`,
+    chips: [['', '全部'], ['official', '官网公告'], ['news', '新闻动态']].map(([k, n]) => ({ text: n, href: qHref('#/list/notices', q, 'kind', k), on: k === kind,
+      count: D.notices.filter(o => okKind(o, k) && okExam(o) && okSrc(o) && okQ(o)).length })),
+    sort: [['new', '最新在前'], ['old', '最早在前']], sortVal: sort,
+    body: `<div class="kit-lbar"><div class="kit-chips">${[{ id: '', short: '全部考试' }, ...E.exams].map(o => ({ o, c: o.id ? examCount(o.id) : null }))
+        .filter(({ o, c }) => !o.id || c || o.id === ex).map(({ o, c }) => `<a class="${o.id === ex ? 'on' : ''}" href="${esc(qHref('#/list/notices', q, 'exam', o.id))}">${esc(o.short)}${c != null ? `<small>${c}</small>` : ''}</a>`).join('')}</div>
+      <select class="kit-sel" data-lq="src"><option value="">全部来源</option>${srcs.map(s => `<option value="${esc(s)}" ${s === src ? 'selected' : ''}>${esc(s)}</option>`).join('')}</select></div>
+      <div class="card list">${all.slice(0, listN).map(noticeRow).join('') || '<div class="empty">没有符合条件的公告</div>'}</div>`,
+    more: all.length > listN ? `加载更多（${listN} / ${all.length}）` : '' });
+});
+KIT.list('timeline', (_, q, box) => {
+  const type = q.get('type') || '', past = q.get('past') === '1', t = cstToday();
+  const base = E.events.filter(e => examOk(e.exam) && (past || phase(e, t) !== 'past'));
+  const evs = base.filter(e => !type || e.type === type), shown = evs.slice(0, listN);
+  const months = [...new Set(shown.map(e => e.start.slice(0, 7)))];
+  const types = Object.keys(TYPE_COLOR).filter(k => base.some(e => e.type === k) || k === type);
+  box.innerHTML = KIT.shell({ title: type ? `${type}时间表` : '全部日程', note: `${evs.length} 项${past ? '（含已过去的）' : ''}${state.onlyFollow && follow.size ? ' · 只看关注的' : ''}`,
+    chips: [['', '全部'], ...types.map(k => [k, k])].map(([k, n]) => ({ text: n, href: qHref('#/list/timeline', q, 'type', k), on: k === type, count: base.filter(e => !k || e.type === k).length })),
+    body: `<div class="kit-lbar"><span class="muted" style="font-size:12.5px">点任一行看这门考试的完整安排</span>
+        <select class="kit-sel" data-lq="past"><option value="">只看未过去的</option><option value="1" ${past ? 'selected' : ''}>包含已过去的</option></select></div>
+      ${months.map(m => `<div class="section-title"><b>${m.slice(0, 4)} 年 ${+m.slice(5)} 月</b><span>${evs.filter(e => e.start.startsWith(m)).length} 项</span></div>
+        <div class="card list">${shown.filter(e => e.start.startsWith(m)).map(eventRow).join('')}</div>`).join('') || '<div class="card empty">没有符合条件的日程</div>'}`,
+    more: evs.length > listN ? `加载更多（${listN} / ${evs.length}）` : '' });
+});
+document.addEventListener('click', e => { if (e.target.closest('[data-kit-more]')) { listN += LPAGE; render(); } });
+// 列表页的排序 / 来源 / 是否含已过：改地址里的参数
+document.addEventListener('change', e => {
+  const el = e.target.closest('[data-kit-sort],[data-lq]'), r = KIT.parse();
+  if (!el || r?.kind !== 'list') return;
+  location.hash = qHref(`#/list/${r.type}${r.id ? '/' + r.id : ''}`, r.q, el.dataset.lq || 'sort', el.value);
+});
+window.addEventListener('hashchange', () => { if (KIT.parse()?.kind !== 'item') listN = LPAGE; }, true);
+
 // ── 日历文件（.ics） ──
-function downloadICS() {
-  const xs = E.exams.filter(x => !follow.size || follow.has(x.id));
+function downloadICS(only) {
+  const xs = only ? [only] : E.exams.filter(x => !follow.size || follow.has(x.id));   // only：详情里只导出这一门
   const t = cstToday();
   const d8 = iso => iso.replace(/-/g, '');
   const plus1 = iso => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + 1); return d.toISOString().slice(0, 10); };
@@ -469,7 +803,7 @@ function downloadICS() {
   lines.push('END:VCALENDAR');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([lines.join('\r\n')], { type: 'text/calendar;charset=utf-8' }));
-  a.download = '考试日历.ics';
+  a.download = only ? `考试日历-${only.short}.ics` : '考试日历.ics';
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
@@ -485,7 +819,7 @@ function renderAside() {
   const t = cstToday();
   const exams = E.events.filter(e => e.type === '考试' && phase(e, t) !== 'past' && examOk(e.exam)).slice(0, 6);
   $('#aside').innerHTML = `
-    <div class="card widget"><h3>⏰ 考试倒计时</h3>${exams.map(e => `<div class="w-row"><span class="l">${esc(e.exam.short)} · ${md(e.start)}</span><span class="r">${relText(e)}</span></div>`).join('') || '<div class="w-note">暂无</div>'}</div>
+    <div class="card widget"><h3>⏰ 考试倒计时</h3>${exams.map(e => `<div class="w-row" data-kit-item="exam/${esc(e.exam.id)}"><span class="l">${esc(e.exam.short)} · ${md(e.start)}</span><span class="r">${relText(e)}</span></div>`).join('') || '<div class="w-note">暂无</div>'}</div>
     <div class="card widget"><h3>🛰 公告来源</h3>${Object.entries(D.sources).map(([k, s]) => `<div class="w-row"><span class="l"><i class="st-dot ${s.ok ? '' : s.stale ? 'stale' : 'bad'}"></i>${esc(s.name === '新闻' ? ({ guokao: '国考', cpa: '注会', fakao: '法考', kuaiji: '会计职称', zhiye: '职业资格', ruankao: '软考' }[k] || k) + '（新闻）' : s.name)}</span><span class="r">${s.ok ? s.count + ' 条' : s.stale ? '旧数据' : '失败'}</span></div>`).join('')}</div>
     <div class="card widget"><h3>ℹ️ 说明</h3><p class="w-note">日程来自各考试官方公告，人工核对后录入；标「预估」的是官方还没公布、按往年惯例推算的。按省报名的考试（教资、会计、软考、职业资格等）各省时间不同，以本省公告为准。官网公告每天北京时间 08:30 更新。</p></div>`;
 }
@@ -493,22 +827,27 @@ function render() {
   if (!E || !D) return;
   if (!VIEWS[state.view]) state.view = 'home';
   $('#nav').innerHTML = Object.entries(VIEWS).map(([k, v]) => `<button class="nav-item ${state.view === k ? 'active' : ''}" data-go="${k}">${v.name}<span class="count">${v.count()}</span></button>`).join('');
-  $('#main').innerHTML = VIEWS[state.view].render();
   renderAside();
+  if (KIT.route($('#main'))) return;                     // #/list/… 列表页
+  $('#main').innerHTML = VIEWS[state.view].render();
 }
 
 // ── 交互 ──
+function toggleFollow(id) {
+  follow.has(id) ? follow.delete(id) : follow.add(id);
+  store.set('follow', [...follow]);
+  if (!follow.size) { state.onlyFollow = false; store.set('onlyFollow', false); }
+  render();
+}
 document.addEventListener('click', e => {
   const go = e.target.closest('[data-go]');
-  if (go) { state.view = go.dataset.go; store.set('view', state.view); render(); window.scrollTo({ top: 0 }); return; }
-  const f = e.target.closest('[data-follow]');
-  if (f) {
-    const id = f.dataset.follow;
-    follow.has(id) ? follow.delete(id) : follow.add(id);
-    store.set('follow', [...follow]);
-    if (!follow.size) { state.onlyFollow = false; store.set('onlyFollow', false); }
-    render(); return;
+  if (go) {
+    state.view = go.dataset.go; store.set('view', state.view);
+    if (KIT.parse()) history.pushState(null, '', location.pathname + location.search);   // 从列表页切视图：去掉 #/list/…
+    render(); window.scrollTo({ top: 0 }); return;
   }
+  const f = e.target.closest('[data-follow]');
+  if (f) { toggleFollow(f.dataset.follow); return; }
   if (e.target.closest('#ics')) { downloadICS(); return; }
   if (e.target.closest('#togglePast')) { state.showPast = !state.showPast; render(); }
 });
@@ -538,6 +877,7 @@ async function load() {
     prep();
     $('#updated').textContent = D.updated ? '公告更新于 ' + ago(D.updated) : '公告暂无';
     render();
+    KIT.boot();
   } catch (err) {
     console.warn('[ExamCalendar]', err);
     if (!E) $('#main').innerHTML = `<div class="card empty">数据读取失败（${esc(err.message)}），稍后点右上角 ↻ 重试</div>`;
@@ -546,6 +886,7 @@ async function load() {
   }
 }
 $('#reload').onclick = load;
+KIT.init(render);
 load();
 setInterval(() => { if (D?.updated) $('#updated').textContent = '公告更新于 ' + ago(D.updated); }, 60 * 1000);
 </script>

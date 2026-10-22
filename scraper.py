@@ -135,8 +135,9 @@ def bing_news(q):
         real = urllib.parse.parse_qs(urllib.parse.urlparse(link).query).get("url")
         pub = re.search(r"<pubDate>(.*?)</pubDate>", it, re.S)
         src = re.search(r"<News:Source>(.*?)</News:Source>", it, re.S)
+        desc = re.search(r"<description>(.*?)</description>", it, re.S)    # Bing 带一段正文摘要（Google 的只是标题链接，不取）
         out.append({"title": clean(re.search(r"<title>(.*?)</title>", it, re.S)[1]), "url": real[0] if real else link,
-                    "source": clean(src[1]) if src else "", "published": pub and pub[1]})
+                    "source": clean(src[1]) if src else "", "published": pub and pub[1], "desc": clean(desc[1])[:300] if desc else ""})
     return out
 
 def news(exam):
@@ -150,7 +151,7 @@ def news(exam):
     if not raw:
         raise ValueError("all queries failed")
     cutoff = NOW - timedelta(days=NEWS_DAYS)
-    out, seen = [], set()
+    out, seen = [], {}
     for it in raw:
         try:
             pub = parsedate_to_datetime(it["published"]).astimezone(CST)
@@ -158,12 +159,19 @@ def news(exam):
             continue
         t = it["title"]
         key = re.sub(r"[^一-龥A-Za-z0-9]", "", t)[:18]
-        if pub < cutoff or key in seen or not re.search(NEWS_MUST[exam], t) or NEWS_EXCLUDE.search(t) \
+        if key in seen:
+            if it.get("desc") and not seen[key].get("desc"):      # 同一条 Google 先到没摘要，用 Bing 的补上
+                seen[key]["desc"] = it["desc"]
+            continue
+        if pub < cutoff or not re.search(NEWS_MUST[exam], t) or NEWS_EXCLUDE.search(t) \
                 or (exam in NEWS_SKIP and NEWS_SKIP[exam].search(t)):
             continue
-        seen.add(key)
-        out.append({"site": exam, "source": it["source"] or "新闻", "title": t, "url": it["url"],
-                    "date": pub.date().isoformat(), "news": True})
+        n = {"site": exam, "source": it["source"] or "新闻", "title": t, "url": it["url"],
+             "date": pub.date().isoformat(), "news": True}
+        if it.get("desc"):
+            n["desc"] = it["desc"]
+        seen[key] = n
+        out.append(n)
     out.sort(key=lambda n: n["date"], reverse=True)
     return out[:12]
 
